@@ -18,7 +18,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         bgcolor: '#000000',
         color: '#ffffff',
         position: 'relative',
-        '& img': { 
+        '& img': {
           maxWidth: '100%',
           height: 'auto',
           display: 'block'
@@ -26,23 +26,29 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       }}
     >
       <SwarmBackground />
+      
+      {/* Header mit erhöhtem z-index */}
       <Box 
         component="header" 
         role="banner"
         sx={{
           position: 'relative',
-          zIndex: 1
+          zIndex: 10, // Erhöhter z-index für bessere Sichtbarkeit
+          mb: 8 // Margin bottom für Abstand zum Content
         }}
       >
         <Navbar />
       </Box>
+
+      {/* Hauptinhalt */}
       <Box 
         component="main"
         role="main"
         sx={{ 
           flexGrow: 1, 
           position: 'relative',
-          zIndex: 1,
+          zIndex: 2,
+          pt: { xs: 8, md: 10 }, // Padding top für Abstand zur Navbar
           '& > *': {
             position: 'relative'
           }
@@ -50,12 +56,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       >
         {children}
       </Box>
+
+      {/* Footer */}
       <Box 
         component="footer" 
         role="contentinfo"
         sx={{
           position: 'relative',
-          zIndex: 1
+          zIndex: 2,
+          mt: 'auto' // Pushes footer to bottom
         }}
       >
         <Footer />

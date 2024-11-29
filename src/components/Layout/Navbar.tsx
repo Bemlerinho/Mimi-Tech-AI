@@ -55,12 +55,11 @@ const Navbar = () => {
       sx={{
         background: isScrolled || trigger
           ? 'rgba(0, 0, 0, 0.95)'
-          : 'transparent',
-        borderBottom: isScrolled || trigger
-          ? '1px solid rgba(255, 255, 255, 0.1)'
-          : 'none',
+          : 'rgba(0, 0, 0, 0.5)', // Leicht sichtbarer Hintergrund auch ohne Scrollen
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
         transition: 'all 0.3s ease-in-out',
-        backdropFilter: isScrolled || trigger ? 'blur(10px)' : 'none',
+        backdropFilter: 'blur(10px)', // Immer aktiver Blur-Effekt
+        zIndex: 1100, // Erhöhter z-index
       }}
     >
       <Container maxWidth="lg">
@@ -77,7 +76,7 @@ const Navbar = () => {
             }}
           >
             <img
-              src="/mimi-tech-ai-logo.svg"
+              src="/images/mimi-tech-ai-logo.svg"
               alt="MimiTech AI Logo"
               style={{
                 height: '45px',
@@ -115,7 +114,8 @@ const Navbar = () => {
               sx={{
                 display: { xs: 'block', md: 'none' },
                 '& .MuiPaper-root': {
-                  backgroundColor: '#111111',
+                  backgroundColor: 'rgba(0, 0, 0, 0.95)',
+                  backdropFilter: 'blur(10px)',
                   border: '1px solid rgba(255, 255, 255, 0.1)',
                 },
               }}
@@ -151,7 +151,7 @@ const Navbar = () => {
             }}
           >
             <img
-              src="/mimi-tech-ai-logo.svg"
+              src="/images/mimi-tech-ai-logo.svg"
               alt="MimiTech AI Logo"
               style={{
                 height: '35px',
@@ -181,6 +181,7 @@ const Navbar = () => {
                   display: 'block',
                   fontSize: '0.9rem',
                   textTransform: 'none',
+                  fontWeight: 500,
                   '&:hover': {
                     color: '#3CAAFF',
                   },
@@ -202,6 +203,7 @@ const Navbar = () => {
                 color: '#000000',
                 textTransform: 'none',
                 px: 3,
+                fontWeight: 500,
                 '&:hover': {
                   backgroundColor: '#2b99ff',
                 },

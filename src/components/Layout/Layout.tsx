@@ -21,11 +21,23 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       }}
     >
       <SwarmBackground />
-      <Navbar />
-      <Box component="main" sx={{ flexGrow: 1, position: 'relative' }}>
+      <Box component="header" role="banner">
+        <Navbar />
+      </Box>
+      <Box 
+        component="main"
+        role="main"
+        sx={{ 
+          flexGrow: 1, 
+          position: 'relative',
+          minHeight: '100vh'
+        }}
+      >
         {children}
       </Box>
-      <Footer />
+      <Box component="footer" role="contentinfo">
+        <Footer />
+      </Box>
     </Box>
   );
 };

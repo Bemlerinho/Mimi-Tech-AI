@@ -11,8 +11,8 @@ import {
   Alert,
   MenuItem,
 } from '@mui/material';
-import Layout from '../../components/Layout/Layout';
 import { motion } from 'framer-motion';
+import SwarmBackground from '../../components/SwarmBackground';
 
 interface FormData {
   company: string;
@@ -85,7 +85,8 @@ const ContactPage: React.FC = () => {
   };
 
   return (
-    <Layout>
+    <>
+      <SwarmBackground />
       <Box
         sx={{
           py: 8,
@@ -230,7 +231,7 @@ const ContactPage: React.FC = () => {
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </Layout>
+    </>
   );
 };
 

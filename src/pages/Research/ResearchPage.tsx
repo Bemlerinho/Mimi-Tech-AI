@@ -3,13 +3,11 @@ import {
   Container,
   Typography,
   Grid,
-  Card,
-  CardContent,
+  Paper,
   Box,
   useTheme,
 } from '@mui/material';
 import { motion } from 'framer-motion';
-import Layout from '../../components/Layout/Layout';
 
 interface ResearchProject {
   title: string;
@@ -49,7 +47,7 @@ const ResearchPage: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <Layout>
+    <>
       <Container maxWidth="xl" sx={{ py: { xs: 6, md: 12 } }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -99,7 +97,7 @@ const ResearchPage: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
                 >
-                  <Card
+                  <Paper
                     component={motion.div}
                     whileHover={{ 
                       y: -12,
@@ -122,7 +120,7 @@ const ResearchPage: React.FC = () => {
                       },
                     }}
                   >
-                    <CardContent sx={{ p: 4 }}>
+                    <Box sx={{ p: 4 }}>
                       <Box
                         sx={{
                           width: 90,
@@ -185,15 +183,15 @@ const ResearchPage: React.FC = () => {
                       >
                         {project.description}
                       </Typography>
-                    </CardContent>
-                  </Card>
+                    </Box>
+                  </Paper>
                 </motion.div>
               </Grid>
             ))}
           </Grid>
         </motion.div>
       </Container>
-    </Layout>
+    </>
   );
 };
 

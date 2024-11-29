@@ -1,13 +1,14 @@
 import React from 'react';
 import { Box, Container, Typography, Grid, Button, Paper } from '@mui/material';
 import { motion } from 'framer-motion';
-import Layout from '../../components/Layout/Layout';
 import SEO from '../../components/SEO/SEO';
 import FeaturesSection from '../../components/Naturio/FeaturesSection';
+import SwarmBackground from '../../components/SwarmBackground';
 
 const NaturioPage: React.FC = () => {
   return (
-    <Layout>
+    <>
+      <SwarmBackground />
       <SEO 
         title="Naturio | Nachhaltige KI-Lösung für Landwirtschaft"
         description="Naturio - Die innovative KI-Lösung für nachhaltige Landwirtschaft und Ressourcenmanagement. Optimieren Sie Ihre Prozesse mit modernster Technologie."
@@ -111,7 +112,7 @@ const NaturioPage: React.FC = () => {
       </Box>
 
       <FeaturesSection />
-    </Layout>
+    </>
   );
 };
 

@@ -6,46 +6,47 @@ import {
   Card,
   Box,
   useTheme,
+  Chip,
 } from '@mui/material';
 import { motion } from 'framer-motion';
-import Layout from '../../components/Layout/Layout';
 
 interface BlogPost {
   title: string;
   description: string;
-  image: string;
   category: string;
   date: string;
+  image: string;
+  readTime: string;
+  tags: string[];
 }
 
 const blogPosts: BlogPost[] = [
   {
-    title: 'Die Zukunft der KI in der Industrie',
-    description: 'Wie künstliche Intelligenz die Fertigungsprozesse revolutioniert und welche Chancen sich für Unternehmen ergeben. Ein Einblick in die neuesten Entwicklungen und Trends.',
-    image: '/images/blog/ai-industry.jpg',
-    category: 'TECHNOLOGIE & INNOVATION',
+    title: 'Die Zukunft der KI in der Nachhaltigkeit',
+    description: 'Wie künstliche Intelligenz uns dabei hilft, eine nachhaltigere Zukunft zu gestalten und welche Rolle Technologie dabei spielt.',
+    category: 'KI & NACHHALTIGKEIT',
     date: '15. März 2024',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1472&auto=format&fit=crop',
+    readTime: '5 min',
+    tags: ['KI', 'Nachhaltigkeit', 'Innovation'],
   },
   {
-    title: 'Nachhaltige KI-Entwicklung',
-    description: 'Strategien und Best Practices für die umweltbewusste Entwicklung von KI-Systemen. Wie wir bei MIMI Tech AI Nachhaltigkeit in unsere Entwicklungsprozesse integrieren.',
-    image: '/images/blog/sustainable-ai.jpg',
-    category: 'NACHHALTIGKEIT',
+    title: 'Erfolgreiche Digitale Transformation',
+    description: 'Best Practices und Strategien für eine erfolgreiche digitale Transformation in Ihrem Unternehmen.',
+    category: 'DIGITALISIERUNG',
     date: '10. März 2024',
+    image: 'https://images.unsplash.com/photo-1488229297570-58520851e868?q=80&w=1469&auto=format&fit=crop',
+    readTime: '4 min',
+    tags: ['Digital', 'Transformation', 'Business'],
   },
   {
     title: 'Machine Learning in der Praxis',
-    description: 'Praktische Anwendungsbeispiele von Machine Learning in verschiedenen Branchen. Von der Datenanalyse bis zur Prozessoptimierung - ein umfassender Überblick.',
-    image: '/images/blog/ml-practice.jpg',
-    category: 'MACHINE LEARNING',
+    description: 'Praktische Anwendungsbeispiele von Machine Learning in verschiedenen Branchen und deren Auswirkungen.',
+    category: 'TECHNOLOGIE',
     date: '5. März 2024',
-  },
-  {
-    title: 'KI und Datenschutz',
-    description: 'Wie können Unternehmen KI-Systeme datenschutzkonform einsetzen? Ein Leitfaden zu rechtlichen Anforderungen und technischen Lösungen.',
-    image: '/images/blog/ai-privacy.jpg',
-    category: 'DATENSCHUTZ & SICHERHEIT',
-    date: '1. März 2024',
+    image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=1470&auto=format&fit=crop',
+    readTime: '6 min',
+    tags: ['ML', 'AI', 'Praxis'],
   },
 ];
 
@@ -53,7 +54,7 @@ const BlogPage: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <Layout>
+    <>
       <Container maxWidth="xl" sx={{ py: { xs: 6, md: 12 } }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -90,13 +91,13 @@ const BlogPage: React.FC = () => {
               lineHeight: 1.8,
             }}
           >
-            Aktuelle Einblicke in die Welt der künstlichen Intelligenz, 
-            Technologie-Trends und nachhaltige Entwicklung.
+            Entdecken Sie aktuelle Einblicke und Trends aus der Welt der KI,
+            Nachhaltigkeit und digitalen Transformation.
           </Typography>
 
           <Grid container spacing={4}>
             {blogPosts.map((post, index) => (
-              <Grid item xs={12} md={6} key={post.title}>
+              <Grid item xs={12} md={6} lg={4} key={post.title}>
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -105,24 +106,25 @@ const BlogPage: React.FC = () => {
                   <Card
                     sx={{
                       height: '100%',
-                      bgcolor: 'rgba(17, 25, 40, 0.75)',
+                      bgcolor: 'rgba(17, 25, 40, 0.88)',
                       borderRadius: 4,
-                      backdropFilter: 'blur(16px) saturate(180%)',
-                      border: '1px solid rgba(255, 255, 255, 0.125)',
+                      backdropFilter: 'blur(20px) saturate(180%)',
+                      border: '1px solid rgba(255, 255, 255, 0.15)',
                       overflow: 'hidden',
-                      transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+                      transition: 'all 0.4s ease-in-out',
+                      cursor: 'pointer',
                       '&:hover': {
                         transform: 'translateY(-8px)',
-                        boxShadow: '0 12px 40px rgba(0, 183, 255, 0.15)',
+                        boxShadow: '0 12px 40px rgba(0, 183, 255, 0.2)',
+                        border: '1px solid rgba(0, 183, 255, 0.3)',
                       },
                     }}
                   >
                     <Box
                       sx={{
-                        height: 240,
-                        width: '100%',
-                        overflow: 'hidden',
                         position: 'relative',
+                        paddingTop: '56.25%', // 16:9 Aspect Ratio
+                        overflow: 'hidden',
                       }}
                     >
                       <Box
@@ -130,10 +132,13 @@ const BlogPage: React.FC = () => {
                         src={post.image}
                         alt={post.title}
                         sx={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
                           width: '100%',
                           height: '100%',
                           objectFit: 'cover',
-                          transition: 'transform 0.3s ease-in-out',
+                          transition: 'transform 0.4s ease-in-out',
                           '&:hover': {
                             transform: 'scale(1.05)',
                           },
@@ -142,38 +147,45 @@ const BlogPage: React.FC = () => {
                     </Box>
 
                     <Box sx={{ p: 4 }}>
-                      <Typography
-                        variant="overline"
+                      <Box
                         sx={{
-                          color: '#00b8ff',
-                          fontWeight: 600,
-                          letterSpacing: 1,
-                          mb: 1,
-                          display: 'block',
-                          fontSize: '0.75rem',
-                        }}
-                      >
-                        {post.category}
-                      </Typography>
-
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          color: 'rgba(255, 255, 255, 0.5)',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
                           mb: 2,
-                          display: 'block',
                         }}
                       >
-                        {post.date}
-                      </Typography>
+                        <Typography
+                          variant="overline"
+                          sx={{
+                            color: '#00b8ff',
+                            fontWeight: 600,
+                            letterSpacing: 1.2,
+                            fontSize: '0.8rem',
+                            textShadow: '0 0 20px rgba(0, 183, 255, 0.3)',
+                          }}
+                        >
+                          {post.category}
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            color: 'rgba(255, 255, 255, 0.6)',
+                            fontSize: '0.875rem',
+                          }}
+                        >
+                          {post.readTime}
+                        </Typography>
+                      </Box>
 
                       <Typography
-                        variant="h4"
+                        variant="h5"
                         sx={{
                           mb: 2,
                           fontWeight: 700,
                           color: 'white',
-                          fontSize: { xs: '1.5rem', md: '1.75rem' },
+                          fontSize: { xs: '1.25rem', md: '1.5rem' },
+                          lineHeight: 1.4,
                         }}
                       >
                         {post.title}
@@ -185,9 +197,38 @@ const BlogPage: React.FC = () => {
                           color: 'rgba(255, 255, 255, 0.7)',
                           lineHeight: 1.8,
                           fontSize: '1rem',
+                          mb: 3,
                         }}
                       >
                         {post.description}
+                      </Typography>
+
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
+                        {post.tags.map((tag) => (
+                          <Chip
+                            key={tag}
+                            label={tag}
+                            size="small"
+                            sx={{
+                              bgcolor: 'rgba(0, 183, 255, 0.1)',
+                              color: '#00b8ff',
+                              borderRadius: '16px',
+                              '&:hover': {
+                                bgcolor: 'rgba(0, 183, 255, 0.2)',
+                              },
+                            }}
+                          />
+                        ))}
+                      </Box>
+
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'rgba(255, 255, 255, 0.5)',
+                          fontSize: '0.875rem',
+                        }}
+                      >
+                        {post.date}
                       </Typography>
                     </Box>
                   </Card>
@@ -197,7 +238,7 @@ const BlogPage: React.FC = () => {
           </Grid>
         </motion.div>
       </Container>
-    </Layout>
+    </>
   );
 };
 

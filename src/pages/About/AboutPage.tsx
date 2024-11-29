@@ -9,7 +9,6 @@ import {
   useTheme,
 } from '@mui/material';
 import { motion } from 'framer-motion';
-import Layout from '../../components/Layout/Layout';
 
 interface AboutSection {
   title: string;
@@ -49,7 +48,7 @@ const AboutPage: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <Layout>
+    <>
       <Container maxWidth="xl" sx={{ py: { xs: 6, md: 12 } }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -101,15 +100,16 @@ const AboutPage: React.FC = () => {
                   <Card
                     sx={{
                       height: '100%',
-                      bgcolor: 'rgba(17, 25, 40, 0.75)',
+                      bgcolor: 'rgba(17, 25, 40, 0.88)',
                       borderRadius: 4,
-                      backdropFilter: 'blur(16px) saturate(180%)',
-                      border: '1px solid rgba(255, 255, 255, 0.125)',
+                      backdropFilter: 'blur(20px) saturate(180%)',
+                      border: '1px solid rgba(255, 255, 255, 0.15)',
                       p: 4,
-                      transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+                      transition: 'all 0.4s ease-in-out',
                       '&:hover': {
                         transform: 'translateY(-8px)',
-                        boxShadow: '0 12px 40px rgba(0, 183, 255, 0.15)',
+                        boxShadow: '0 12px 40px rgba(0, 183, 255, 0.2)',
+                        border: '1px solid rgba(0, 183, 255, 0.3)',
                       },
                     }}
                   >
@@ -118,10 +118,14 @@ const AboutPage: React.FC = () => {
                       src={section.icon}
                       alt=""
                       sx={{
-                        width: 56,
-                        height: 56,
-                        mb: 2,
-                        filter: 'drop-shadow(0 0 20px rgba(0, 183, 255, 0.3))',
+                        width: 64,
+                        height: 64,
+                        mb: 3,
+                        filter: 'drop-shadow(0 0 25px rgba(0, 183, 255, 0.4))',
+                        transition: 'transform 0.3s ease-in-out',
+                        '&:hover': {
+                          transform: 'scale(1.1)',
+                        },
                       }}
                     />
                     
@@ -130,10 +134,11 @@ const AboutPage: React.FC = () => {
                       sx={{
                         color: '#00b8ff',
                         fontWeight: 600,
-                        letterSpacing: 1,
+                        letterSpacing: 1.2,
                         mb: 1,
                         display: 'block',
-                        fontSize: '0.75rem',
+                        fontSize: '0.8rem',
+                        textShadow: '0 0 20px rgba(0, 183, 255, 0.3)',
                       }}
                     >
                       {section.category}
@@ -168,7 +173,7 @@ const AboutPage: React.FC = () => {
           </Grid>
         </motion.div>
       </Container>
-    </Layout>
+    </>
   );
 };
 

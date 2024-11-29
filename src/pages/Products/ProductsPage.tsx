@@ -9,13 +9,13 @@ import {
   useTheme,
 } from '@mui/material';
 import { motion } from 'framer-motion';
-import Layout from '../../components/Layout/Layout';
 
 interface Product {
   title: string;
   description: string;
   icon: string;
   category: string;
+  image: string;
 }
 
 const products: Product[] = [
@@ -24,18 +24,21 @@ const products: Product[] = [
     description: 'Die provisionsfreie Plattform für nachhaltige Produkte und Dienstleistungen. Ermöglicht direkten Kontakt zwischen Anbietern und Kunden, mit integrierter Nachhaltigkeits-Zertifizierung.',
     icon: '/icons/naturio.svg',
     category: 'NACHHALTIGER HANDEL',
+    image: 'https://images.unsplash.com/photo-1472289065668-ce650ac443d2?q=80&w=1469&auto=format&fit=crop',
   },
   {
     title: 'OpenAI Swarm-Lösungen',
     description: 'Intelligente Automatisierung und Optimierung durch KI-gestützte Schwarmtechnologie. Echtzeitoptimierung und selbstlernende Systeme für maximale Effizienz.',
     icon: '/icons/swarm.svg',
     category: 'KI-AUTOMATION',
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1632&auto=format&fit=crop',
   },
   {
     title: 'Maßgeschneiderte Apps',
     description: 'Individuelle Softwarelösungen für Ihre spezifischen Anforderungen. Moderne Technologien und agile Entwicklungsmethoden für optimale Ergebnisse.',
     icon: '/icons/apps.svg',
     category: 'ENTWICKLUNG',
+    image: 'https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?q=80&w=1470&auto=format&fit=crop',
   },
 ];
 
@@ -43,7 +46,7 @@ const ProductsPage: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <Layout>
+    <>
       <Container maxWidth="xl" sx={{ py: { xs: 6, md: 12 } }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -86,7 +89,7 @@ const ProductsPage: React.FC = () => {
 
           <Grid container spacing={4}>
             {products.map((product, index) => (
-              <Grid item xs={12} md={6} key={product.title}>
+              <Grid item xs={12} md={6} lg={4} key={product.title}>
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -95,66 +98,101 @@ const ProductsPage: React.FC = () => {
                   <Card
                     sx={{
                       height: '100%',
-                      bgcolor: 'rgba(17, 25, 40, 0.75)',
+                      bgcolor: 'rgba(17, 25, 40, 0.88)',
                       borderRadius: 4,
-                      backdropFilter: 'blur(16px) saturate(180%)',
-                      border: '1px solid rgba(255, 255, 255, 0.125)',
-                      p: 4,
-                      transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+                      backdropFilter: 'blur(20px) saturate(180%)',
+                      border: '1px solid rgba(255, 255, 255, 0.15)',
+                      overflow: 'hidden',
+                      transition: 'all 0.4s ease-in-out',
                       '&:hover': {
                         transform: 'translateY(-8px)',
-                        boxShadow: '0 12px 40px rgba(0, 183, 255, 0.15)',
+                        boxShadow: '0 12px 40px rgba(0, 183, 255, 0.2)',
+                        border: '1px solid rgba(0, 183, 255, 0.3)',
                       },
                     }}
                   >
                     <Box
-                      component="img"
-                      src={product.icon}
-                      alt=""
                       sx={{
-                        width: 56,
-                        height: 56,
-                        mb: 2,
-                        filter: 'drop-shadow(0 0 20px rgba(0, 183, 255, 0.3))',
-                      }}
-                    />
-                    
-                    <Typography
-                      variant="overline"
-                      sx={{
-                        color: '#00b8ff',
-                        fontWeight: 600,
-                        letterSpacing: 1,
-                        mb: 1,
-                        display: 'block',
-                        fontSize: '0.75rem',
+                        position: 'relative',
+                        paddingTop: '56.25%', // 16:9 Aspect Ratio
+                        overflow: 'hidden',
                       }}
                     >
-                      {product.category}
-                    </Typography>
+                      <Box
+                        component="img"
+                        src={product.image}
+                        alt={product.title}
+                        sx={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          transition: 'transform 0.4s ease-in-out',
+                          '&:hover': {
+                            transform: 'scale(1.05)',
+                          },
+                        }}
+                      />
+                    </Box>
 
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        mb: 2,
-                        fontWeight: 700,
-                        color: 'white',
-                        fontSize: { xs: '1.5rem', md: '1.75rem' },
-                      }}
-                    >
-                      {product.title}
-                    </Typography>
+                    <Box sx={{ p: 4 }}>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          mb: 3,
+                        }}
+                      >
+                        <Box
+                          component="img"
+                          src={product.icon}
+                          alt=""
+                          sx={{
+                            width: 48,
+                            height: 48,
+                            mr: 2,
+                            filter: 'drop-shadow(0 0 25px rgba(0, 183, 255, 0.4))',
+                          }}
+                        />
+                        <Typography
+                          variant="overline"
+                          sx={{
+                            color: '#00b8ff',
+                            fontWeight: 600,
+                            letterSpacing: 1.2,
+                            fontSize: '0.8rem',
+                            textShadow: '0 0 20px rgba(0, 183, 255, 0.3)',
+                          }}
+                        >
+                          {product.category}
+                        </Typography>
+                      </Box>
 
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: 'rgba(255, 255, 255, 0.7)',
-                        lineHeight: 1.8,
-                        fontSize: '1rem',
-                      }}
-                    >
-                      {product.description}
-                    </Typography>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          mb: 2,
+                          fontWeight: 700,
+                          color: 'white',
+                          fontSize: { xs: '1.5rem', md: '1.75rem' },
+                        }}
+                      >
+                        {product.title}
+                      </Typography>
+
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          color: 'rgba(255, 255, 255, 0.7)',
+                          lineHeight: 1.8,
+                          fontSize: '1rem',
+                        }}
+                      >
+                        {product.description}
+                      </Typography>
+                    </Box>
                   </Card>
                 </motion.div>
               </Grid>
@@ -162,7 +200,7 @@ const ProductsPage: React.FC = () => {
           </Grid>
         </motion.div>
       </Container>
-    </Layout>
+    </>
   );
 };
 

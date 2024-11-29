@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="600px" viewBox="0 0 800 600" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle fill="#3CAAFF" opacity="0.1" cx="400" cy="300" r="250"/>
+        <g transform="translate(250, 150)" stroke="#3CAAFF" stroke-width="2">
+            <path d="M150,50 C200,50 250,100 250,150 C250,200 200,250 150,250 C100,250 50,200 50,150 C50,100 100,50 150,50 Z" />
+            <path d="M150,100 L150,200 M100,150 L200,150" stroke-linecap="round"/>
+            <circle cx="150" cy="150" r="80" stroke-dasharray="10,10"/>
+        </g>
+    </g>
+</svg>

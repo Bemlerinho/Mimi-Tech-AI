@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="50" viewBox="0 0 200 50" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .logo-text { font-family: Arial, sans-serif; font-weight: bold; }
+    .tech-text { fill: #666; }
+    .ai-text { fill: #0066cc; }
+  </style>
+  <text x="10" y="35" class="logo-text" font-size="24">MIMI</text>
+  <text x="80" y="35" class="logo-text tech-text" font-size="24">Tech</text>
+  <text x="140" y="35" class="logo-text ai-text" font-size="24">AI</text>
+</svg>

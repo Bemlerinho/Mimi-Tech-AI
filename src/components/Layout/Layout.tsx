@@ -18,10 +18,22 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         bgcolor: '#000000',
         color: '#ffffff',
         position: 'relative',
+        '& img': { 
+          maxWidth: '100%',
+          height: 'auto',
+          display: 'block'
+        }
       }}
     >
       <SwarmBackground />
-      <Box component="header" role="banner">
+      <Box 
+        component="header" 
+        role="banner"
+        sx={{
+          position: 'relative',
+          zIndex: 1
+        }}
+      >
         <Navbar />
       </Box>
       <Box 
@@ -30,12 +42,22 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         sx={{ 
           flexGrow: 1, 
           position: 'relative',
-          minHeight: '100vh'
+          zIndex: 1,
+          '& > *': {
+            position: 'relative'
+          }
         }}
       >
         {children}
       </Box>
-      <Box component="footer" role="contentinfo">
+      <Box 
+        component="footer" 
+        role="contentinfo"
+        sx={{
+          position: 'relative',
+          zIndex: 1
+        }}
+      >
         <Footer />
       </Box>
     </Box>

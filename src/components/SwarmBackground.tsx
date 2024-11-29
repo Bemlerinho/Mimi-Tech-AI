@@ -27,6 +27,7 @@ const SwarmBackground: React.FC = () => {
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setClearColor(0x000000, 0); // Transparenter Hintergrund
     containerRef.current.appendChild(renderer.domElement);
 
     // Particles
@@ -59,9 +60,9 @@ const SwarmBackground: React.FC = () => {
 
     const material = new THREE.PointsMaterial({
       color: 0xffffff,
-      size: 3.0,
+      size: 2.0, // Kleinere Partikel
       transparent: true,
-      opacity: 0.15,
+      opacity: 0.1, // Geringere Opazität
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
@@ -78,7 +79,6 @@ const SwarmBackground: React.FC = () => {
       for (let i = 0; i < particlesCount; i++) {
         const i3 = i * 3;
         
-        // Update velocity based on target
         const currentPos = new THREE.Vector3(
           positions[i3],
           positions[i3 + 1],
@@ -99,17 +99,14 @@ const SwarmBackground: React.FC = () => {
           velocities[i].add(toTarget.normalize().multiplyScalar(0.0002));
         }
         
-        // Apply velocity
         positions[i3] += velocities[i].x;
         positions[i3 + 1] += velocities[i].y;
         positions[i3 + 2] += velocities[i].z;
         
-        // Damping
         velocities[i].multiplyScalar(0.99);
       }
       particles.geometry.attributes.position.needsUpdate = true;
 
-      // Rotate entire particle system
       particles.rotation.y += 0.0002;
 
       renderer.render(scene, camera);
@@ -144,14 +141,15 @@ const SwarmBackground: React.FC = () => {
     <div
       ref={containerRef}
       style={{
-        position: 'absolute',
+        position: 'fixed',
         top: 0,
         left: 0,
         width: '100%',
         height: '100%',
-        zIndex: 0,
+        zIndex: -1, // Hinter allem anderen
         pointerEvents: 'none',
         mixBlendMode: 'screen',
+        opacity: 0.6, // Reduzierte Gesamtopazität
       }}
     />
   );

@@ -16,9 +16,11 @@ const NaturioPage: React.FC = () => {
       />
       <Box
         sx={{
-          background: 'linear-gradient(135deg, rgba(0,128,128,0.1) 0%, rgba(0,64,128,0.1) 100%)',
+          background: 'linear-gradient(135deg, rgba(146,205,138,0.1) 0%, rgba(95,141,89,0.1) 100%)',
           pt: 12,
           pb: 6,
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
         <Container>
@@ -29,16 +31,20 @@ const NaturioPage: React.FC = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <Typography
-                  variant="h1"
-                  sx={{
-                    fontSize: { xs: '2.5rem', md: '3.5rem' },
-                    fontWeight: 700,
-                    mb: 3,
-                  }}
-                >
-                  Naturio
-                </Typography>
+                <Box sx={{ mb: 4 }}>
+                  <motion.img
+                    src="/images/Naturio.jpg"
+                    alt="Naturio Logo"
+                    style={{
+                      width: '280px',
+                      height: 'auto',
+                      marginBottom: '2rem'
+                    }}
+                    initial={{ scale: 0.9 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                  />
+                </Box>
                 <Typography
                   variant="h2"
                   sx={{
@@ -50,23 +56,37 @@ const NaturioPage: React.FC = () => {
                 >
                   Die provisionsfreie Plattform für nachhaltige Produkte
                 </Typography>
-                <Typography variant="body1" sx={{ mb: 4, fontSize: '1.1rem' }}>
+                <Typography 
+                  variant="body1" 
+                  sx={{ 
+                    mb: 4, 
+                    fontSize: '1.1rem',
+                    lineHeight: 1.6,
+                    color: 'text.secondary',
+                    maxWidth: '600px'
+                  }}
+                >
                   Naturio ist der führende Marktplatz für ausschließlich nachhaltige Produkte. 
                   Wir bieten Händlern ein einzigartiges, provisionsfreies Abomodell - von 
                   kleinen Einzelhändlern bis hin zu großen Unternehmen. Starten Sie jetzt 
                   und profitieren Sie von unserer innovativen Plattform für nachhaltigen Handel.
                 </Typography>
 
-                <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
+                <Box sx={{ display: 'flex', gap: 2, mb: 4, flexWrap: 'wrap' }}>
                   <Button
                     variant="contained"
                     size="large"
                     href="/contact"
                     sx={{
-                      backgroundColor: '#00a86b',
+                      backgroundColor: '#5F8D59',
                       '&:hover': {
-                        backgroundColor: '#008f5d',
+                        backgroundColor: '#4A6E45',
                       },
+                      px: 4,
+                      py: 1.5,
+                      borderRadius: 2,
+                      textTransform: 'none',
+                      fontSize: '1.1rem',
                     }}
                   >
                     Händler werden
@@ -76,12 +96,17 @@ const NaturioPage: React.FC = () => {
                     size="large"
                     href="/pricing"
                     sx={{
-                      borderColor: '#00a86b',
-                      color: '#00a86b',
+                      borderColor: '#5F8D59',
+                      color: '#5F8D59',
                       '&:hover': {
-                        borderColor: '#008f5d',
-                        backgroundColor: 'rgba(0,168,107,0.04)',
+                        borderColor: '#4A6E45',
+                        backgroundColor: 'rgba(95,141,89,0.04)',
                       },
+                      px: 4,
+                      py: 1.5,
+                      borderRadius: 2,
+                      textTransform: 'none',
+                      fontSize: '1.1rem',
                     }}
                   >
                     Abomodelle ansehen
@@ -94,17 +119,47 @@ const NaturioPage: React.FC = () => {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
+                style={{
+                  position: 'relative',
+                  padding: '2rem'
+                }}
               >
                 <Box
-                  component="img"
-                  src="/images/Naturio.jpg"
-                  alt="Naturio Platform"
                   sx={{
-                    width: '100%',
-                    borderRadius: 2,
-                    boxShadow: 3,
+                    position: 'relative',
+                    '&::before': {
+                      content: '""',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'rgba(146,205,138,0.1)',
+                      borderRadius: '20px',
+                      transform: 'rotate(-3deg)',
+                      zIndex: -1
+                    }
                   }}
-                />
+                >
+                  <Box
+                    component="img"
+                    src="/naturio.svg"
+                    alt="Naturio Platform"
+                    sx={{
+                      width: '100%',
+                      height: 'auto',
+                      maxWidth: '500px',
+                      display: 'block',
+                      margin: '0 auto',
+                      filter: 'drop-shadow(0px 4px 20px rgba(0,0,0,0.15))',
+                      transition: 'all 0.3s ease-in-out',
+                      '&:hover': {
+                        filter: 'drop-shadow(0px 8px 30px rgba(0,0,0,0.2))',
+                        transform: 'translateY(-5px)'
+                      }
+                    }}
+                  />
+                </Box>
               </motion.div>
             </Grid>
           </Grid>

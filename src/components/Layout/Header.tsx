@@ -1,90 +1,153 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   AppBar,
   Box,
-  Toolbar,
-  Typography,
-  Button,
+  Container,
   IconButton,
+  Toolbar,
+  Button,
+  useScrollTrigger,
+  Slide,
+  Stack,
   Drawer,
   List,
   ListItem,
   ListItemText,
-  Container,
-  useMediaQuery,
-  useTheme as useMuiTheme,
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import ThemeToggle from '../ThemeToggle/ThemeToggle';
+import { Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+
+interface Props {
+  window?: () => Window;
+}
+
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  background: 'rgba(10, 26, 47, 0.8)',
+  backdropFilter: 'blur(10px)',
+  boxShadow: 'none',
+  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+}));
+
+const Logo = styled(motion.img)({
+  height: '40px',
+  cursor: 'pointer',
+});
+
+const NavButton = styled(Button)(({ theme }) => ({
+  color: 'white',
+  textTransform: 'none',
+  fontSize: '1rem',
+  padding: '6px 16px',
+  borderRadius: '8px',
+  transition: 'all 0.2s ease-in-out',
+  '&:hover': {
+    backgroundColor: 'rgba(13, 175, 148, 0.1)',
+    transform: 'translateY(-2px)',
+  },
+}));
+
+const ActiveNavButton = styled(NavButton)(({ theme }) => ({
+  backgroundColor: 'rgba(13, 175, 148, 0.15)',
+  '&:hover': {
+    backgroundColor: 'rgba(13, 175, 148, 0.2)',
+  },
+}));
+
+const MobileDrawer = styled(Drawer)(({ theme }) => ({
+  '& .MuiDrawer-paper': {
+    width: '100%',
+    maxWidth: '300px',
+    background: 'rgba(10, 26, 47, 0.95)',
+    backdropFilter: 'blur(10px)',
+    borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
+  },
+}));
 
 const navItems = [
-  { name: 'Startseite', path: '/' },
-  { name: 'Über uns', path: '/about' },
-  { name: 'Produkte', path: '/products' },
-  { name: 'KI-Konfigurator', path: '/configurator' },
-  { name: 'Blog', path: '/blog' },
-  { name: 'Kontakt', path: '/contact' },
+  { label: 'Home', path: '/' },
+  { label: 'Über uns', path: '/about' },
+  { label: 'Produkte', path: '/products' },
+  { label: 'Blog', path: '/blog' },
+  { label: 'Research', path: '/research' },
+  { label: 'Naturio', path: '/naturio' },
 ];
 
-const Header: React.FC = () => {
+function HideOnScroll(props: Props) {
+  const { children, window } = props;
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined,
+  });
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
+
+const Header: React.FC<Props> = (props) => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const theme = useMuiTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const isActive = (path: string) => {
-    if (path === '/' && location.pathname !== '/') {
-      return false;
-    }
+    if (path === '/' && location.pathname !== '/') return false;
     return location.pathname.startsWith(path);
   };
 
   const drawer = (
-    <Box
-      sx={{
-        width: 250,
-        height: '100%',
-        bgcolor: 'background.paper',
-        p: 2,
-      }}
-      role="presentation"
-      onClick={handleDrawerToggle}
-    >
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Box
-          component="img"
-          src="/logo.svg"
-          alt="MIMI Tech AI"
-          sx={{ height: 40 }}
-        />
-        <IconButton onClick={handleDrawerToggle}>
+    <Box sx={{ p: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <IconButton
+          onClick={handleDrawerToggle}
+          sx={{ color: 'white' }}
+        >
           <CloseIcon />
         </IconButton>
       </Box>
       <List>
         {navItems.map((item) => (
           <ListItem
-            key={item.name}
-            component={RouterLink}
+            key={item.path}
+            component={Link}
             to={item.path}
+            onClick={handleDrawerToggle}
             sx={{
-              borderRadius: 1,
+              borderRadius: '8px',
               mb: 1,
-              bgcolor: isActive(item.path) ? 'primary.light' : 'transparent',
-              color: isActive(item.path) ? 'white' : 'text.primary',
+              backgroundColor: isActive(item.path)
+                ? 'rgba(13, 175, 148, 0.15)'
+                : 'transparent',
               '&:hover': {
-                bgcolor: isActive(item.path) ? 'primary.light' : 'action.hover',
+                backgroundColor: 'rgba(13, 175, 148, 0.1)',
               },
             }}
           >
-            <ListItemText primary={item.name} />
+            <ListItemText
+              primary={item.label}
+              sx={{
+                color: 'white',
+                '& .MuiTypography-root': {
+                  fontSize: '1.1rem',
+                },
+              }}
+            />
           </ListItem>
         ))}
       </List>
@@ -92,94 +155,136 @@ const Header: React.FC = () => {
   );
 
   return (
-    <AppBar
-      position="fixed"
-      elevation={0}
-      sx={{
-        borderBottom: '1px solid',
-        borderColor: 'divider',
-        bgcolor: 'background.paper',
-        backdropFilter: 'blur(20px)',
-      }}
-    >
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Box
-            component={RouterLink}
-            to="/"
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              textDecoration: 'none',
-              color: 'inherit',
-            }}
-          >
-            <Box
-              component="img"
-              src="/logo.svg"
-              alt="MIMI Tech AI"
-              sx={{ height: 40, mr: 2 }}
-            />
-          </Box>
-
-          {isMobile ? (
-            <>
-              <Box sx={{ flexGrow: 1 }} />
-              <ThemeToggle />
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ ml: 1 }}
-              >
-                <MenuIcon />
-              </IconButton>
-            </>
-          ) : (
-            <>
-              <Box sx={{ flexGrow: 1 }} />
-              {navItems.map((item) => (
-                <Button
-                  key={item.name}
-                  component={RouterLink}
-                  to={item.path}
+    <HideOnScroll {...props}>
+      <StyledAppBar
+        position="fixed"
+        sx={{
+          backgroundColor: scrolled
+            ? 'rgba(10, 26, 47, 0.95)'
+            : 'rgba(10, 26, 47, 0.8)',
+        }}
+      >
+        <Container maxWidth="xl">
+          <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Link to="/">
+                <Logo
+                  src="/mimi-tech-ai-logo.svg"
+                  alt="MIMI Tech AI Logo"
                   sx={{
-                    mx: 1,
-                    color: isActive(item.path) ? 'primary.main' : 'text.primary',
+                    height: '50px',
+                    filter: 'brightness(1)',
+                    transition: 'all 0.3s ease-in-out',
                     '&:hover': {
-                      color: 'primary.main',
+                      filter: 'brightness(1.2) drop-shadow(0 0 10px rgba(19, 167, 176, 0.5))',
+                      transform: 'scale(1.05)',
+                    },
+                    animation: 'glow 3s ease-in-out infinite',
+                    '@keyframes glow': {
+                      '0%': {
+                        filter: 'brightness(1) drop-shadow(0 0 5px rgba(19, 167, 176, 0.2))',
+                      },
+                      '50%': {
+                        filter: 'brightness(1.1) drop-shadow(0 0 10px rgba(19, 167, 176, 0.4))',
+                      },
+                      '100%': {
+                        filter: 'brightness(1) drop-shadow(0 0 5px rgba(19, 167, 176, 0.2))',
+                      },
+                    },
+                  }}
+                />
+              </Link>
+            </motion.div>
+
+            {/* Desktop Navigation */}
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+                alignItems: 'center',
+              }}
+            >
+              {navItems.map((item) => (
+                <motion.div
+                  key={item.path}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
+                  {isActive(item.path) ? (
+                    <ActiveNavButton
+                      component={Link}
+                      to={item.path}
+                    >
+                      {item.label}
+                    </ActiveNavButton>
+                  ) : (
+                    <NavButton
+                      component={Link}
+                      to={item.path}
+                    >
+                      {item.label}
+                    </NavButton>
+                  )}
+                </motion.div>
+              ))}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <Button
+                  component={Link}
+                  to="/contact"
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    ml: 2,
+                    textTransform: 'none',
+                    borderRadius: '8px',
+                    px: 3,
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 4px 8px rgba(13, 175, 148, 0.2)',
                     },
                   }}
                 >
-                  {item.name}
+                  Kontakt
                 </Button>
-              ))}
-              <ThemeToggle />
-            </>
-          )}
-        </Toolbar>
-      </Container>
+              </motion.div>
+            </Stack>
 
-      <Drawer
-        variant="temporary"
-        anchor="right"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true,
-        }}
-        sx={{
-          display: { xs: 'block', md: 'none' },
-          '& .MuiDrawer-paper': {
-            boxSizing: 'border-box',
-            width: 250,
-          },
-        }}
-      >
-        {drawer}
-      </Drawer>
-    </AppBar>
+            {/* Mobile Menu Button */}
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ display: { md: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Toolbar>
+        </Container>
+
+        {/* Mobile Navigation Drawer */}
+        <MobileDrawer
+          anchor="right"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true,
+          }}
+        >
+          {drawer}
+        </MobileDrawer>
+      </StyledAppBar>
+    </HideOnScroll>
   );
 };
 

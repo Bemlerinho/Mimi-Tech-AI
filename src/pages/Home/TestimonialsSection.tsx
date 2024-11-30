@@ -1,159 +1,235 @@
 import React from 'react';
-import { Box, Container, Typography, Avatar, Paper, Rating } from '@mui/material';
+import { Box, Container, Typography, Grid } from '@mui/material';
 import { motion } from 'framer-motion';
-import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 
 const testimonials = [
   {
-    name: 'Dr. Sarah Weber',
-    role: 'CTO, TechVision GmbH',
-    avatar: '/avatars/avatar1.jpg',
-    rating: 5,
-    text: 'Die KI-Lösungen von MIMI Tech AI haben unsere Produktivität um 40% gesteigert. Die Implementierung war reibungslos und der Support ist erstklassig.',
+    quote: "40%",
+    subline: "Produktivitätssteigerung",
+    highlight: "Durch KI-gestützte Prozessoptimierung",
+    impact: "Automatisierung von Routineaufgaben und verbesserte Entscheidungsfindung",
+    industry: "TECHNOLOGIE",
   },
   {
-    name: 'Michael Schmidt',
-    role: 'Geschäftsführer, InnovateTech',
-    avatar: '/avatars/avatar2.jpg',
-    rating: 5,
-    text: 'Beeindruckende Technologie und hervorragende Beratung. MIMI Tech AI hat uns geholfen, unsere Prozesse zu optimieren und neue Geschäftsmöglichkeiten zu erschließen.',
+    quote: "30%",
+    subline: "Kostenreduktion",
+    highlight: "Effizientere Ressourcennutzung",
+    impact: "Optimierte Workflows und reduzierte manuelle Eingriffe",
+    industry: "PRODUKTION",
   },
   {
-    name: 'Lisa Müller',
-    role: 'Leiterin Digitalisierung, FutureCore',
-    avatar: '/avatars/avatar3.jpg',
-    rating: 5,
-    text: 'Die maßgeschneiderten KI-Lösungen haben unsere Erwartungen übertroffen. Ein echter Game-Changer für unser Unternehmen.',
+    quote: "2x",
+    subline: "schnellere Markteinführung",
+    highlight: "Beschleunigte Entwicklungszyklen",
+    impact: "KI-gestützte Produktentwicklung und Testing",
+    industry: "SOFTWARE",
   },
 ];
 
 const TestimonialCard: React.FC<{
-  name: string;
-  role: string;
-  avatar: string;
-  rating: number;
-  text: string;
+  quote: string;
+  subline: string;
+  highlight: string;
+  impact: string;
+  industry: string;
   delay: number;
-}> = ({ name, role, avatar, rating, text, delay }) => (
+}> = ({ quote, subline, highlight, impact, industry, delay }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5, delay }}
     viewport={{ once: true }}
   >
-    <Paper
-      elevation={0}
+    <Box
       sx={{
         p: 4,
         height: '100%',
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        backdropFilter: 'blur(20px)',
+        minHeight: '380px',
+        width: '100%',
+        background: 'linear-gradient(165deg, rgba(19, 167, 176, 0.15) 0%, rgba(19, 167, 176, 0.05) 100%)',
         borderRadius: '24px',
+        border: '1px solid rgba(19, 167, 176, 0.2)',
+        backdropFilter: 'blur(10px)',
+        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
         position: 'relative',
         overflow: 'hidden',
-        transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+        display: 'flex',
+        flexDirection: 'column',
         '&:hover': {
           transform: 'translateY(-8px)',
-          boxShadow: '0 12px 24px rgba(33, 150, 243, 0.1)',
+          boxShadow: '0 20px 40px rgba(19, 167, 176, 0.15)',
+          '&::before': {
+            transform: 'translateX(100%)',
+          }
         },
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: 'linear-gradient(90deg, transparent, rgba(19, 167, 176, 0.1), transparent)',
+          transform: 'translateX(-100%)',
+          transition: 'transform 0.6s ease',
+        }
       }}
     >
-      <FormatQuoteIcon
-        sx={{
-          position: 'absolute',
-          top: 20,
-          right: 20,
-          fontSize: 40,
-          color: 'rgba(33, 150, 243, 0.1)',
-        }}
-      />
-      <Box sx={{ mb: 3 }}>
-        <Rating value={rating} readOnly />
+      <Box sx={{ mb: 2 }}>
+        <Typography
+          variant="h3"
+          component="div"
+          sx={{
+            fontSize: { xs: '2.5rem', md: '2.8rem' },
+            fontWeight: 800,
+            background: 'linear-gradient(135deg, #13A7B0 0%, #89F9FF 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            letterSpacing: '-0.02em',
+            lineHeight: 1,
+            display: 'inline',
+          }}
+        >
+          {quote}
+        </Typography>
+        <Typography
+          variant="h3"
+          component="div"
+          sx={{
+            fontSize: { xs: '1.4rem', md: '1.6rem' },
+            fontWeight: 800,
+            background: 'linear-gradient(135deg, #13A7B0 0%, #89F9FF 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            letterSpacing: '-0.02em',
+            lineHeight: 1.2,
+            display: 'inline-block',
+            ml: 1,
+            maxWidth: '100%',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}
+        >
+          {subline}
+        </Typography>
       </Box>
+      <Typography
+        variant="h6"
+        sx={{
+          fontWeight: 600,
+          color: '#ffffff',
+          mb: 2,
+          fontSize: '1.25rem',
+          letterSpacing: '0.5px',
+          lineHeight: 1.4,
+        }}
+      >
+        {highlight}
+      </Typography>
       <Typography
         variant="body1"
         sx={{
-          mb: 4,
-          color: 'text.secondary',
-          fontStyle: 'italic',
-          minHeight: '80px',
+          color: 'rgba(255, 255, 255, 0.85)',
+          mb: 'auto',
+          lineHeight: 1.8,
+          fontSize: '1.1rem',
         }}
       >
-        "{text}"
+        {impact}
       </Typography>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Avatar
-          src={avatar}
+      <Box
+        sx={{
+          display: 'inline-block',
+          background: 'rgba(19, 167, 176, 0.15)',
+          padding: '8px 16px',
+          borderRadius: '12px',
+          border: '1px solid rgba(19, 167, 176, 0.3)',
+          mt: 3,
+        }}
+      >
+        <Typography
+          variant="subtitle2"
           sx={{
-            width: 56,
-            height: 56,
-            mr: 2,
-            border: '2px solid',
-            borderColor: 'primary.main',
+            color: '#13A7B0',
+            fontWeight: 700,
+            textTransform: 'uppercase',
+            letterSpacing: '1.5px',
+            fontSize: '0.875rem',
           }}
-        />
-        <Box>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-            {name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {role}
-          </Typography>
-        </Box>
+        >
+          {industry}
+        </Typography>
       </Box>
-    </Paper>
+    </Box>
   </motion.div>
 );
 
 const TestimonialsSection: React.FC = () => {
   return (
     <Box
+      component="section"
       sx={{
-        py: { xs: 8, md: 12 },
-        background: 'linear-gradient(135deg, #E3F2FD 0%, #FFFFFF 100%)',
+        py: { xs: 10, md: 15 },
+        position: 'relative',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '1px',
+          background: 'linear-gradient(90deg, transparent, rgba(19, 167, 176, 0.3), transparent)',
+        },
+        '&::after': {
+          content: '""',
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: '1px',
+          background: 'linear-gradient(90deg, transparent, rgba(19, 167, 176, 0.3), transparent)',
+        }
       }}
     >
-      <Container maxWidth="lg">
-        <Box sx={{ textAlign: 'center', mb: 8 }}>
+      <Container maxWidth="xl">
+        <Box sx={{ mb: 10, textAlign: 'center' }}>
           <Typography
             variant="h2"
+            component="h2"
             sx={{
-              fontWeight: 700,
-              fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-              mb: 2,
-              background: 'linear-gradient(45deg, #2196F3 30%, #00BFA5 90%)',
+              fontSize: { xs: '2.75rem', md: '3.75rem' },
+              fontWeight: 800,
+              background: 'linear-gradient(135deg, #FFFFFF 0%, #13A7B0 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
+              mb: 3,
+              letterSpacing: '-0.02em',
             }}
           >
-            Was unsere Kunden sagen
+            Messbare Erfolge
           </Typography>
           <Typography
             variant="h5"
-            color="text.secondary"
-            sx={{ maxWidth: '800px', mx: 'auto' }}
+            sx={{
+              color: 'rgba(255, 255, 255, 0.9)',
+              maxWidth: '800px',
+              mx: 'auto',
+              fontSize: '1.35rem',
+              lineHeight: 1.6,
+              letterSpacing: '0.3px',
+            }}
           >
-            Erfahren Sie, wie unsere KI-Lösungen Unternehmen transformieren
+            Konkrete Ergebnisse unserer KI-Implementierungen
           </Typography>
         </Box>
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: '1fr',
-              md: 'repeat(3, 1fr)',
-            },
-            gap: 4,
-          }}
-        >
+
+        <Grid container spacing={4}>
           {testimonials.map((testimonial, index) => (
-            <TestimonialCard
-              key={index}
-              {...testimonial}
-              delay={index * 0.2}
-            />
+            <Grid item xs={12} md={4} key={index} sx={{ minWidth: { md: '400px' } }}>
+              <TestimonialCard {...testimonial} delay={index * 0.2} />
+            </Grid>
           ))}
-        </Box>
+        </Grid>
       </Container>
     </Box>
   );

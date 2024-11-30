@@ -1,0 +1,36 @@
+.particle-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(10, 26, 47, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
+}
+
+.particle-background canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#tsparticles {
+  position: fixed !important;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: transparent;
+}
+
+#tsparticles canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

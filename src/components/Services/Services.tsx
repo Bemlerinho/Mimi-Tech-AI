@@ -1,210 +1,276 @@
 import React from 'react';
-import {
-  Box,
-  Container,
-  Grid,
-  Typography,
-  Card,
-  CardContent,
-  IconButton,
-} from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Box, Container, Grid, Typography, Card, CardContent, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import SmartToyIcon from '@mui/icons-material/SmartToy';
-import DataObjectIcon from '@mui/icons-material/DataObject';
-import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
-import SecurityIcon from '@mui/icons-material/Security';
+import { styled } from '@mui/material/styles';
+import PageBackground from '../Background/PageBackground';
 
-const ServiceCard = styled(Card)(({ theme }) => ({
+interface Service {
+  id: number;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+const StyledCard = styled(Card)(({ theme }) => ({
   height: '100%',
-  background: 'rgba(255, 255, 255, 0.03)',
+  minHeight: '300px',
+  background: 'rgba(2, 6, 23, 0.5)',
   backdropFilter: 'blur(10px)',
-  borderRadius: '16px',
-  border: '1px solid rgba(255, 255, 255, 0.1)',
-  transition: 'all 0.3s ease-in-out',
+  borderRadius: '20px',
+  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+  border: '1px solid rgba(255, 255, 255, 0.05)',
+  overflow: 'hidden',
+  position: 'relative',
+  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
   '&:hover': {
     transform: 'translateY(-8px)',
-    boxShadow: '0 12px 24px rgba(13, 175, 148, 0.15)',
-    border: '1px solid rgba(13, 175, 148, 0.3)',
-    '& .MuiIconButton-root': {
-      backgroundColor: theme.palette.primary.main,
-      transform: 'rotate(180deg)',
+    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    '& .icon-wrapper': {
+      transform: 'scale(1.1)',
+      background: 'rgba(0, 224, 255, 0.1)',
     },
+    '& .service-title': {
+      color: '#00e0ff',
+    }
+  },
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '2px',
+    background: 'linear-gradient(90deg, #00e0ff 0%, rgba(0, 224, 255, 0.3) 100%)',
+    opacity: 0,
+    transition: 'opacity 0.3s ease',
+  },
+  '&:hover::before': {
+    opacity: 1,
   },
 }));
 
-const IconWrapper = styled(IconButton)(({ theme }) => ({
-  backgroundColor: 'rgba(13, 175, 148, 0.1)',
-  width: '64px',
-  height: '64px',
-  marginBottom: theme.spacing(2),
-  transition: 'all 0.3s ease-in-out',
-  '& svg': {
-    fontSize: '32px',
-    color: theme.palette.primary.main,
+const IconWrapper = styled(Box)(({ theme }) => ({
+  width: '70px',
+  height: '70px',
+  borderRadius: '16px',
+  background: 'rgba(0, 224, 255, 0.05)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginBottom: theme.spacing(3),
+  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+  border: '1px solid rgba(0, 224, 255, 0.1)',
+  boxShadow: '0 4px 12px rgba(0, 224, 255, 0.1)',
+  '& img': {
+    width: '35px',
+    height: '35px',
+    filter: 'brightness(0) invert(1)',
+    opacity: 0.9,
   },
 }));
 
-const services = [
+const services: Service[] = [
   {
-    title: 'KI-Entwicklung',
-    description: 'Maßgeschneiderte KI-Lösungen für Ihr Unternehmen mit modernsten Algorithmen und Technologien.',
-    icon: <SmartToyIcon />,
+    id: 1,
+    title: 'KI-Integration',
+    description: 'Nahtlose Integration modernster KI-Technologien in bestehende Systeme',
+    icon: '/icons/integration.svg',
   },
   {
-    title: 'Machine Learning',
-    description: 'Entwicklung und Implementation von ML-Modellen für Datenanalyse und Vorhersagen.',
-    icon: <AutoAwesomeIcon />,
+    id: 2,
+    title: 'Datenverarbeitung',
+    description: 'Effiziente Verarbeitung und Analyse großer Datenmengen mit KI',
+    icon: '/icons/data.svg',
   },
   {
-    title: 'API Integration',
-    description: 'Nahtlose Integration von KI-Services in bestehende Systeme durch moderne APIs.',
-    icon: <DataObjectIcon />,
+    id: 3,
+    title: 'Cloud-Infrastruktur',
+    description: 'Skalierbare Cloud-basierte KI-Infrastruktur für maximale Flexibilität',
+    icon: '/icons/cloud.svg',
   },
   {
-    title: 'Automatisierung',
-    description: 'Prozessautomatisierung durch intelligente Algorithmen und Robotik.',
-    icon: <IntegrationInstructionsIcon />,
+    id: 4,
+    title: 'Enterprise Security',
+    description: 'Höchste Sicherheitsstandards für Ihre KI-Anwendungen',
+    icon: '/icons/security.svg',
   },
   {
-    title: 'Datenanalyse',
-    description: 'Umfassende Analyse Ihrer Daten für fundierte Geschäftsentscheidungen.',
-    icon: <AnalyticsIcon />,
+    id: 5,
+    title: 'Performance',
+    description: 'Optimierte Leistung durch KI-gestützte Prozessautomatisierung',
+    icon: '/icons/performance.svg',
   },
   {
-    title: 'KI-Sicherheit',
-    description: 'Implementierung sicherer KI-Systeme mit Fokus auf Datenschutz und Ethik.',
-    icon: <SecurityIcon />,
+    id: 6,
+    title: '24/7 Support',
+    description: 'Rund-um-die-Uhr Unterstützung durch unser Expertenteam',
+    icon: '/icons/support.svg',
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
+const ServicesSection: React.FC = () => {
+  const theme = useTheme();
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-    },
-  },
-};
-
-const Services: React.FC = () => {
   return (
-    <Box
-      sx={{
-        py: 8,
-        position: 'relative',
-        '&::before': {
-          content: '""',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'radial-gradient(circle at center, rgba(13, 175, 148, 0.1) 0%, rgba(0, 0, 0, 0) 70%)',
-          pointerEvents: 'none',
-        },
-      }}
-    >
-      <Container maxWidth="lg">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+    <PageBackground>
+      <Box sx={{ py: { xs: 8, md: 12 } }}>
+        <Box
+          component="section"
+          sx={{
+            py: { xs: 10, md: 15 },
+            background: 'linear-gradient(180deg, #001B3D 0%, #000B1A 100%)',
+            position: 'relative',
+            overflow: 'hidden',
+            color: 'white',
+          }}
         >
-          <Typography
-            variant="h2"
-            component="h2"
-            align="center"
+          {/* Animated background elements */}
+          <Box
             sx={{
-              mb: 2,
-              fontWeight: 700,
-              background: 'linear-gradient(135deg, #3CAAFF 0%, #0DAF94 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              overflow: 'hidden',
+              zIndex: 0,
+              opacity: 0.4,
             }}
           >
-            Unsere Services
-          </Typography>
-          <Typography
-            variant="h6"
-            align="center"
-            sx={{
-              mb: 6,
-              color: 'rgba(255, 255, 255, 0.7)',
-              maxWidth: '800px',
-              mx: 'auto',
-            }}
-          >
-            Entdecken Sie unsere innovativen KI-Lösungen für die Herausforderungen von morgen
-          </Typography>
-        </motion.div>
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <Grid container spacing={4}>
-            {services.map((service, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
-                <motion.div variants={itemVariants}>
-                  <ServiceCard>
-                    <CardContent
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        textAlign: 'center',
-                        p: 4,
-                      }}
-                    >
-                      <IconWrapper>{service.icon}</IconWrapper>
-                      <Typography
-                        variant="h6"
-                        component="h3"
-                        sx={{
-                          mb: 2,
-                          color: 'white',
-                          fontWeight: 600,
-                        }}
-                      >
-                        {service.title}
-                      </Typography>
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          color: 'rgba(255, 255, 255, 0.7)',
-                          lineHeight: 1.6,
-                        }}
-                      >
-                        {service.description}
-                      </Typography>
-                    </CardContent>
-                  </ServiceCard>
-                </motion.div>
-              </Grid>
+            {[...Array(5)].map((_, i) => (
+              <Box
+                key={i}
+                component={motion.div}
+                sx={{
+                  position: 'absolute',
+                  background: 'radial-gradient(circle, rgba(0, 224, 255, 0.15) 0%, rgba(0, 224, 255, 0) 70%)',
+                  borderRadius: '50%',
+                  filter: 'blur(40px)',
+                }}
+                initial={{
+                  x: Math.random() * 100 - 50,
+                  y: Math.random() * 100 - 50,
+                  scale: 1,
+                  opacity: 0.3,
+                }}
+                animate={{
+                  x: Math.random() * 100 - 50,
+                  y: Math.random() * 100 - 50,
+                  scale: [1, 1.2, 1],
+                  opacity: [0.3, 0.5, 0.3],
+                }}
+                transition={{
+                  duration: 10,
+                  repeat: Infinity,
+                  repeatType: 'reverse',
+                  ease: 'easeInOut',
+                }}
+                style={{
+                  width: '400px',
+                  height: '400px',
+                  left: `${i * 25}%`,
+                  top: `${i * 20}%`,
+                }}
+              />
             ))}
-          </Grid>
-        </motion.div>
-      </Container>
-    </Box>
+          </Box>
+
+          <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <Box textAlign="center" mb={10}>
+                <Typography
+                  component="h2"
+                  variant="h2"
+                  sx={{
+                    mb: 3,
+                    fontWeight: 700,
+                    letterSpacing: '-0.5px',
+                    fontSize: { xs: '2.5rem', md: '3.5rem' },
+                    color: '#fff',
+                    textShadow: '0 0 20px rgba(0, 224, 255, 0.3)',
+                  }}
+                >
+                  Unsere Leistungen
+                </Typography>
+                <Typography
+                  variant="h5"
+                  sx={{ 
+                    maxWidth: '800px', 
+                    mx: 'auto', 
+                    mb: 3, 
+                    lineHeight: 1.6,
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    fontWeight: 400,
+                    fontSize: { xs: '1.1rem', md: '1.25rem' },
+                  }}
+                >
+                  Innovative Lösungen für Ihre digitale Transformation
+                </Typography>
+              </Box>
+            </motion.div>
+
+            <Grid container spacing={4}>
+              {services.map((service, index) => (
+                <Grid item xs={12} sm={6} md={4} key={service.id}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: index * 0.1 }}
+                  >
+                    <StyledCard>
+                      <CardContent 
+                        sx={{ 
+                          p: 4,
+                          height: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          textAlign: 'center',
+                        }}
+                      >
+                        <IconWrapper className="icon-wrapper">
+                          <img src={service.icon} alt={service.title} />
+                        </IconWrapper>
+                        <Typography
+                          variant="h5"
+                          component="h3"
+                          className="service-title"
+                          sx={{ 
+                            fontWeight: 600,
+                            mb: 2,
+                            color: 'rgba(255, 255, 255, 0.95)',
+                            fontSize: '1.4rem',
+                            transition: 'color 0.3s ease',
+                          }}
+                        >
+                          {service.title}
+                        </Typography>
+                        <Typography
+                          variant="body1"
+                          sx={{ 
+                            color: 'rgba(255, 255, 255, 0.7)',
+                            lineHeight: 1.7,
+                            fontSize: '1rem',
+                          }}
+                        >
+                          {service.description}
+                        </Typography>
+                      </CardContent>
+                    </StyledCard>
+                  </motion.div>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </Box>
+      </Box>
+    </PageBackground>
   );
 };
 
-export default Services;
+export default ServicesSection;

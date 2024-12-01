@@ -3,27 +3,32 @@ import { Box, Container, Typography, Grid, Button, Paper } from '@mui/material';
 import { motion } from 'framer-motion';
 import SEO from '../../components/SEO/SEO';
 import FeaturesSection from '../../components/Naturio/FeaturesSection';
-import SwarmBackground from '../../components/SwarmBackground';
+import SwarmBackground from '../../components/Background/SwarmBackground';
+import MouseAgent3D from '../../components/Background/MouseAgent3D';
 
 const NaturioPage: React.FC = () => {
   return (
     <>
-      <SwarmBackground />
       <SEO 
         title="Naturio | Nachhaltige KI-Lösung für Landwirtschaft"
         description="Naturio - Die innovative KI-Lösung für nachhaltige Landwirtschaft und Ressourcenmanagement. Optimieren Sie Ihre Prozesse mit modernster Technologie."
         keywords="Naturio, Landwirtschaft KI, Nachhaltige KI, Ressourcenmanagement"
       />
-      <Box
-        sx={{
-          background: 'linear-gradient(135deg, rgba(146,205,138,0.1) 0%, rgba(95,141,89,0.1) 100%)',
-          pt: 12,
-          pb: 6,
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        <Container>
+      <Box sx={{ 
+        position: 'relative',
+        background: '#0A1A2F',
+        minHeight: '100vh',
+      }}>
+        <SwarmBackground />
+        <MouseAgent3D />
+        <Container 
+          maxWidth="xl" 
+          sx={{ 
+            position: 'relative',
+            zIndex: 1,
+            py: 8
+          }}
+        >
           <Grid container spacing={6} alignItems="center">
             <Grid item xs={12} md={6}>
               <motion.div
@@ -38,20 +43,28 @@ const NaturioPage: React.FC = () => {
                     style={{
                       width: '280px',
                       height: 'auto',
-                      marginBottom: '2rem'
+                      marginBottom: '2rem',
+                      filter: 'drop-shadow(0 0 25px rgba(0, 183, 255, 0.4))',
+                      objectFit: 'contain',
+                      display: 'block'
                     }}
-                    initial={{ scale: 0.9 }}
-                    animate={{ scale: 1 }}
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.5 }}
                   />
                 </Box>
                 <Typography
-                  variant="h2"
+                  variant="h1"
                   sx={{
-                    fontSize: { xs: '1.5rem', md: '2rem' },
-                    fontWeight: 500,
+                    fontSize: { xs: '2.5rem', md: '3.5rem' },
+                    fontWeight: 700,
                     mb: 3,
-                    color: 'text.secondary',
+                    background: 'linear-gradient(135deg, #00ff9b 0%, #00b8ff 50%, #7b42ff 100%)',
+                    backgroundClip: 'text',
+                    textFillColor: 'transparent',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    textShadow: '0 0 40px rgba(0, 183, 255, 0.15)',
                   }}
                 >
                   Die provisionsfreie Plattform für nachhaltige Produkte
@@ -61,8 +74,8 @@ const NaturioPage: React.FC = () => {
                   sx={{ 
                     mb: 4, 
                     fontSize: '1.1rem',
-                    lineHeight: 1.6,
-                    color: 'text.secondary',
+                    lineHeight: 1.8,
+                    color: 'rgba(255, 255, 255, 0.7)',
                     maxWidth: '600px'
                   }}
                 >
@@ -78,15 +91,20 @@ const NaturioPage: React.FC = () => {
                     size="large"
                     href="/contact"
                     sx={{
-                      backgroundColor: '#5F8D59',
+                      background: 'linear-gradient(135deg, #00ff9b 0%, #00b8ff 100%)',
+                      color: '#0A1A2F',
+                      fontWeight: 600,
                       '&:hover': {
-                        backgroundColor: '#4A6E45',
+                        background: 'linear-gradient(135deg, #00ff9b 20%, #00b8ff 120%)',
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 8px 25px rgba(0, 183, 255, 0.25)',
                       },
                       px: 4,
                       py: 1.5,
                       borderRadius: 2,
                       textTransform: 'none',
                       fontSize: '1.1rem',
+                      transition: 'all 0.3s ease-in-out',
                     }}
                   >
                     Händler werden
@@ -94,22 +112,24 @@ const NaturioPage: React.FC = () => {
                   <Button
                     variant="outlined"
                     size="large"
-                    href="/pricing"
+                    href="/contact"
                     sx={{
-                      borderColor: '#5F8D59',
-                      color: '#5F8D59',
+                      borderColor: '#00b8ff',
+                      color: '#00b8ff',
                       '&:hover': {
-                        borderColor: '#4A6E45',
-                        backgroundColor: 'rgba(95,141,89,0.04)',
+                        borderColor: '#00ff9b',
+                        backgroundColor: 'rgba(0, 183, 255, 0.1)',
+                        transform: 'translateY(-2px)',
                       },
                       px: 4,
                       py: 1.5,
                       borderRadius: 2,
                       textTransform: 'none',
                       fontSize: '1.1rem',
+                      transition: 'all 0.3s ease-in-out',
                     }}
                   >
-                    Abomodelle ansehen
+                    Jetzt kontaktieren
                   </Button>
                 </Box>
               </motion.div>
@@ -134,7 +154,7 @@ const NaturioPage: React.FC = () => {
                       left: 0,
                       right: 0,
                       bottom: 0,
-                      background: 'rgba(146,205,138,0.1)',
+                      background: 'rgba(0, 183, 255, 0.1)',
                       borderRadius: '20px',
                       transform: 'rotate(-3deg)',
                       zIndex: -1
@@ -143,7 +163,7 @@ const NaturioPage: React.FC = () => {
                 >
                   <Box
                     component="img"
-                    src="/naturio.svg"
+                    src="/public/images/naturio.svg"
                     alt="Naturio Platform"
                     sx={{
                       width: '100%',
@@ -151,10 +171,10 @@ const NaturioPage: React.FC = () => {
                       maxWidth: '500px',
                       display: 'block',
                       margin: '0 auto',
-                      filter: 'drop-shadow(0px 4px 20px rgba(0,0,0,0.15))',
+                      filter: 'drop-shadow(0px 4px 20px rgba(0, 183, 255, 0.25))',
                       transition: 'all 0.3s ease-in-out',
                       '&:hover': {
-                        filter: 'drop-shadow(0px 8px 30px rgba(0,0,0,0.2))',
+                        filter: 'drop-shadow(0px 8px 30px rgba(0, 183, 255, 0.4))',
                         transform: 'translateY(-5px)'
                       }
                     }}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Container,
@@ -6,168 +6,180 @@ import {
   Typography,
   Card,
   CardContent,
-  LinearProgress,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
+import CodeIcon from '@mui/icons-material/Code';
+import BiotechIcon from '@mui/icons-material/Biotech';
+import PsychologyIcon from '@mui/icons-material/Psychology';
+import MemoryIcon from '@mui/icons-material/Memory';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
+import PageBackground from '../Background/PageBackground';
 
-const StyledCard = styled(Card)(({ theme }) => ({
+const StyledCard = styled(motion.div)(({ theme }) => ({
   height: '100%',
-  background: 'rgba(255, 255, 255, 0.03)',
-  backdropFilter: 'blur(10px)',
-  borderRadius: '16px',
-  border: '1px solid rgba(255, 255, 255, 0.1)',
-  transition: 'all 0.3s ease-in-out',
-  '&:hover': {
-    transform: 'translateY(-5px)',
-    boxShadow: '0 8px 16px rgba(13, 175, 148, 0.15)',
-    border: '1px solid rgba(13, 175, 148, 0.3)',
-  },
+  background: 'rgba(0, 8, 20, 0.5)',
+  backdropFilter: 'blur(20px)',
+  borderRadius: '24px',
+  border: '1px solid rgba(0, 224, 255, 0.1)',
+  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+  position: 'relative',
+  overflow: 'hidden',
 }));
 
-const StyledProgress = styled(LinearProgress)(({ theme }) => ({
-  height: 8,
-  borderRadius: 4,
-  backgroundColor: 'rgba(255, 255, 255, 0.1)',
-  '& .MuiLinearProgress-bar': {
-    borderRadius: 4,
-    background: 'linear-gradient(90deg, #0DAF94 0%, #3CAAFF 100%)',
+const GlowingIcon = styled(motion.div)({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginBottom: '24px',
+  '& > svg': {
+    fontSize: '48px',
+    color: '#00e0ff',
+    filter: 'drop-shadow(0 0 10px rgba(0, 224, 255, 0.5))',
   },
-}));
+});
 
 const skills = [
-  { name: 'Künstliche Intelligenz', progress: 95 },
-  { name: 'Machine Learning', progress: 90 },
-  { name: 'Deep Learning', progress: 85 },
-  { name: 'Natural Language Processing', progress: 88 },
-  { name: 'Computer Vision', progress: 92 },
-  { name: 'Robotik & Automation', progress: 87 },
+  {
+    name: 'Künstliche Intelligenz',
+    icon: <PsychologyIcon />,
+    description: 'Entwicklung intelligenter Systeme und KI-Lösungen für zukunftsweisende Innovationen',
+    gradient: 'linear-gradient(135deg, #00e0ff 0%, #0066ff 100%)'
+  },
+  { 
+    name: 'Machine Learning',
+    icon: <MemoryIcon />,
+    description: 'Implementierung fortschrittlicher ML-Algorithmen und prädiktiver Modelle',
+    gradient: 'linear-gradient(135deg, #0066ff 0%, #00e0ff 100%)'
+  },
+  { 
+    name: 'Deep Learning',
+    icon: <BiotechIcon />,
+    description: 'Spezialisierung auf komplexe neuronale Netze und innovative DL-Architekturen',
+    gradient: 'linear-gradient(135deg, #00e0ff 0%, #0066ff 100%)'
+  },
+  { 
+    name: 'Natural Language Processing',
+    icon: <AutoFixHighIcon />,
+    description: 'Fortgeschrittene Verarbeitung und Analyse natürlicher Sprache',
+    gradient: 'linear-gradient(135deg, #0066ff 0%, #00e0ff 100%)'
+  },
+  { 
+    name: 'Computer Vision',
+    icon: <CodeIcon />,
+    description: 'Innovative Bildverarbeitung und visuelle KI-Anwendungen der nächsten Generation',
+    gradient: 'linear-gradient(135deg, #00e0ff 0%, #0066ff 100%)'
+  },
+  { 
+    name: 'Robotik & Automation',
+    icon: <PrecisionManufacturingIcon />,
+    description: 'Zukunftsweisende Robotersteuerung und intelligente Prozessautomatisierung',
+    gradient: 'linear-gradient(135deg, #0066ff 0%, #00e0ff 100%)'
+  },
 ];
 
 const About: React.FC = () => {
-  return (
-    <Box
-      sx={{
-        py: 8,
-        position: 'relative',
-        '&::before': {
-          content: '""',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'radial-gradient(circle at right top, rgba(13, 175, 148, 0.1) 0%, rgba(0, 0, 0, 0) 70%)',
-          pointerEvents: 'none',
-        },
-      }}
-    >
-      <Container maxWidth="lg">
-        <Grid container spacing={6}>
-          <Grid item xs={12} md={6}>
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <Typography
-                variant="h2"
-                component="h2"
-                sx={{
-                  mb: 3,
-                  fontWeight: 700,
-                  background: 'linear-gradient(135deg, #3CAAFF 0%, #0DAF94 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}
-              >
-                Über MIMI Tech AI
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  mb: 4,
-                  color: 'rgba(255, 255, 255, 0.7)',
-                  fontSize: '1.1rem',
-                  lineHeight: 1.8,
-                }}
-              >
-                MIMI Tech AI ist ein führendes Unternehmen im Bereich der künstlichen Intelligenz 
-                und Automatisierung. Wir entwickeln innovative Lösungen, die Unternehmen dabei 
-                helfen, ihre Prozesse zu optimieren und neue Geschäftsmöglichkeiten zu erschließen.
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: 'rgba(255, 255, 255, 0.7)',
-                  fontSize: '1.1rem',
-                  lineHeight: 1.8,
-                }}
-              >
-                Mit unserem Team aus erfahrenen Experten und modernster Technologie setzen wir 
-                neue Maßstäbe in der KI-Entwicklung und bieten maßgeschneiderte Lösungen für 
-                die Herausforderungen von morgen.
-              </Typography>
-            </motion.div>
-          </Grid>
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { scrollYProgress } = useScroll();
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.8, 1, 1, 0.8]);
+  const springConfig = { stiffness: 100, damping: 30, mass: 1 };
+  const titleY = useSpring(useMotionValue(20), springConfig);
+  
+  useEffect(() => {
+    titleY.set(0);
+  }, []);
 
-          <Grid item xs={12} md={6}>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <StyledCard>
-                <CardContent sx={{ p: 4 }}>
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      mb: 4,
-                      color: 'white',
-                      fontWeight: 600,
-                    }}
-                  >
-                    Unsere Expertise
-                  </Typography>
-                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-                    {skills.map((skill, index) => (
-                      <Box key={index}>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            mb: 1,
-                          }}
-                        >
-                          <Typography
-                            variant="body1"
-                            sx={{ color: 'rgba(255, 255, 255, 0.9)' }}
-                          >
-                            {skill.name}
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            sx={{ color: 'rgba(255, 255, 255, 0.7)' }}
-                          >
-                            {skill.progress}%
-                          </Typography>
-                        </Box>
-                        <StyledProgress
-                          variant="determinate"
-                          value={skill.progress}
-                        />
-                      </Box>
-                    ))}
-                  </Box>
-                </CardContent>
-              </StyledCard>
-            </motion.div>
+  return (
+    <PageBackground>
+      <Container maxWidth="lg" sx={{ py: { xs: 8, md: 12 } }}>
+        <motion.div
+          style={{
+            opacity,
+            scale,
+            y: titleY,
+          }}
+        >
+          <Typography
+            variant="h1"
+            component="h1"
+            sx={{
+              textAlign: 'center',
+              mb: 2,
+              fontSize: { xs: '2.5rem', md: '4rem' },
+              fontWeight: 800,
+              background: 'linear-gradient(135deg, #00e0ff 0%, #0066ff 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              textShadow: '0 0 30px rgba(0, 224, 255, 0.3)',
+              letterSpacing: '-0.02em',
+            }}
+          >
+            MIMI Tech AI
+          </Typography>
+
+          <Typography
+            variant="h4"
+            sx={{
+              textAlign: 'center',
+              mb: { xs: 6, md: 10 },
+              color: 'rgba(255, 255, 255, 0.9)',
+              maxWidth: '900px',
+              mx: 'auto',
+              fontSize: { xs: '1.2rem', md: '1.5rem' },
+              fontWeight: 500,
+              lineHeight: 1.6,
+            }}
+          >
+            Wir entwickeln innovative KI-Lösungen für die digitale Transformation von morgen
+          </Typography>
+
+          <Grid container spacing={4}>
+            {skills.map((skill, index) => (
+              <Grid item xs={12} md={4} key={index}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <StyledCard>
+                    <CardContent sx={{ p: 4 }}>
+                      <GlowingIcon>{skill.icon}</GlowingIcon>
+                      <Typography
+                        variant="h5"
+                        sx={{
+                          mb: 2,
+                          fontWeight: 700,
+                          background: skill.gradient,
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                        }}
+                      >
+                        {skill.name}
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          color: 'rgba(255, 255, 255, 0.8)',
+                          lineHeight: 1.8,
+                        }}
+                      >
+                        {skill.description}
+                      </Typography>
+                    </CardContent>
+                  </StyledCard>
+                </motion.div>
+              </Grid>
+            ))}
           </Grid>
-        </Grid>
+        </motion.div>
       </Container>
-    </Box>
+    </PageBackground>
   );
 };
 

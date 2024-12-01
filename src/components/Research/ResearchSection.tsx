@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Container, Grid, Typography, Card, CardContent, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import { styled } from '@mui/material/styles';
+import PageBackground from '../Background/PageBackground';
 
 interface ResearchArea {
   id: number;
@@ -13,40 +14,79 @@ interface ResearchArea {
 
 const StyledCard = styled(Card)(({ theme }) => ({
   height: '100%',
+  minHeight: '420px',
   background: 'rgba(255, 255, 255, 0.95)',
-  backdropFilter: 'blur(10px)',
-  borderRadius: '16px',
-  transition: 'all 0.3s ease-in-out',
+  backdropFilter: 'blur(20px)',
+  borderRadius: '24px',
+  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+  border: '1px solid rgba(255, 255, 255, 0.2)',
+  overflow: 'hidden',
+  position: 'relative',
+  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.04)',
+  display: 'flex',
+  flexDirection: 'column',
   '&:hover': {
-    transform: 'translateY(-8px)',
-    boxShadow: '0 12px 24px rgba(0, 0, 0, 0.1)',
+    transform: 'translateY(-12px) scale(1.02)',
+    boxShadow: '0 30px 60px rgba(0, 0, 0, 0.12)',
+    '& .icon-wrapper': {
+      transform: 'scale(1.1) rotate(5deg)',
+    },
+    '& .card-content': {
+      background: 'linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(233,246,255,0.5) 100%)',
+    }
+  },
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '4px',
+    background: 'linear-gradient(90deg, #3B82F6 0%, #10B981 100%)',
+    opacity: 0,
+    transition: 'opacity 0.3s ease',
+  },
+  '&:hover::before': {
+    opacity: 1,
   },
 }));
 
 const IconWrapper = styled(Box)(({ theme }) => ({
-  width: '80px',
-  height: '80px',
-  borderRadius: '50%',
-  background: 'linear-gradient(135deg, #e0f7fa 0%, #80deea 100%)',
+  width: '90px',
+  height: '90px',
+  borderRadius: '24px',
+  background: 'linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(16,185,129,0.1) 100%)',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   marginBottom: theme.spacing(3),
+  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.04)',
+  border: '1px solid rgba(255, 255, 255, 0.2)',
   '& img': {
-    width: '40px',
-    height: '40px',
+    width: '45px',
+    height: '45px',
+    filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))',
   },
 }));
 
 const CategoryLabel = styled(Typography)(({ theme }) => ({
   display: 'inline-block',
-  padding: '4px 12px',
-  borderRadius: '16px',
-  backgroundColor: 'rgba(0, 128, 128, 0.1)',
-  color: theme.palette.primary.main,
+  padding: '8px 16px',
+  borderRadius: '12px',
+  backgroundColor: 'rgba(59, 130, 246, 0.1)',
+  color: '#3B82F6',
   marginBottom: theme.spacing(2),
-  fontSize: '0.875rem',
-  fontWeight: 500,
+  fontSize: '0.8rem',
+  fontWeight: 600,
+  letterSpacing: '0.5px',
+  textTransform: 'uppercase',
+  border: '1px solid rgba(59, 130, 246, 0.2)',
+  whiteSpace: 'normal',
+  wordBreak: 'break-word',
+  maxWidth: '100%',
+  lineHeight: '1.2',
+  textAlign: 'center',
 }));
 
 const researchAreas: ResearchArea[] = [
@@ -84,84 +124,125 @@ const ResearchSection: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <Box
-      sx={{
-        py: 12,
-        background: 'linear-gradient(135deg, rgba(0,128,128,0.05) 0%, rgba(0,64,128,0.05) 100%)',
-      }}
-    >
-      <Container>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <Typography
-            variant="h2"
-            align="center"
-            gutterBottom
-            sx={{ 
-              mb: 2,
-              fontWeight: 700,
-              background: 'linear-gradient(135deg, #004d40 0%, #00796b 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
+    <PageBackground>
+      <Box sx={{ py: { xs: 8, md: 12 } }}>
+        <Container maxWidth="lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            Forschung & Innovation
-          </Typography>
-          <Typography
-            variant="h5"
-            align="center"
-            color="text.secondary"
-            sx={{ mb: 8, maxWidth: '800px', mx: 'auto' }}
-          >
-            Wir treiben die Grenzen der KI-Technologie voran und entwickeln die
-            nächste Generation ethischer und nachhaltiger KI-Systeme.
-          </Typography>
-        </motion.div>
-
-        <Grid container spacing={4}>
-          {researchAreas.map((area, index) => (
-            <Grid item xs={12} md={6} key={area.id}>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
+            <Box textAlign="center" mb={10}>
+              <Typography
+                component="span"
+                sx={{
+                  display: 'block',
+                  textTransform: 'uppercase',
+                  color: '#3B82F6',
+                  fontWeight: 600,
+                  letterSpacing: '1.5px',
+                  fontSize: '0.875rem',
+                  mb: 2,
+                }}
               >
-                <StyledCard>
-                  <CardContent sx={{ p: 4 }}>
-                    <IconWrapper>
-                      <img src={area.icon} alt={area.title} />
-                    </IconWrapper>
-                    <CategoryLabel>{area.category}</CategoryLabel>
-                    <Typography
-                      variant="h4"
-                      gutterBottom
+                Innovationen für die Zukunft
+              </Typography>
+              <Typography
+                component="h2"
+                variant="h2"
+                sx={{
+                  mb: 3,
+                  background: 'linear-gradient(90deg, #3B82F6 0%, #10B981 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  fontWeight: 800,
+                  letterSpacing: '-0.5px',
+                  fontSize: { xs: '2.5rem', md: '3.5rem' },
+                }}
+              >
+                Forschung & Innovation
+              </Typography>
+              <Typography
+                variant="h5"
+                sx={{ 
+                  maxWidth: '800px', 
+                  mx: 'auto', 
+                  mb: 3, 
+                  lineHeight: 1.6,
+                  color: 'text.secondary',
+                  fontWeight: 400,
+                  fontSize: { xs: '1.1rem', md: '1.25rem' },
+                }}
+              >
+                Wir treiben die Grenzen der KI-Technologie voran und entwickeln die nächste Generation ethischer und nachhaltiger KI-Systeme.
+              </Typography>
+            </Box>
+          </motion.div>
+
+          <Grid container spacing={4}>
+            {researchAreas.map((area, index) => (
+              <Grid item xs={12} sm={6} md={3} key={area.id}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.15 }}
+                >
+                  <StyledCard>
+                    <CardContent 
                       sx={{ 
-                        fontWeight: 600,
-                        fontSize: '1.5rem',
-                        mb: 2,
-                        minHeight: '4rem'
-                      }}
+                        p: 4,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: '100%',
+                        gap: 2
+                      }} 
+                      className="card-content"
                     >
-                      {area.title}
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      color="text.secondary"
-                      sx={{ lineHeight: 1.7 }}
-                    >
-                      {area.description}
-                    </Typography>
-                  </CardContent>
-                </StyledCard>
-              </motion.div>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-    </Box>
+                      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+                        <IconWrapper className="icon-wrapper">
+                          <img src={area.icon} alt={area.title} />
+                        </IconWrapper>
+                        <CategoryLabel>{area.category}</CategoryLabel>
+                      </Box>
+                      <Typography
+                        variant="h5"
+                        component="h3"
+                        gutterBottom
+                        sx={{ 
+                          fontWeight: 700,
+                          fontSize: '1.25rem',
+                          lineHeight: 1.4,
+                          color: '#1F2937',
+                          textAlign: 'center',
+                          minHeight: '2.8em',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {area.title}
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        sx={{ 
+                          lineHeight: 1.7,
+                          color: '#4B5563',
+                          fontSize: '0.975rem',
+                          textAlign: 'center',
+                          flex: 1,
+                        }}
+                      >
+                        {area.description}
+                      </Typography>
+                    </CardContent>
+                  </StyledCard>
+                </motion.div>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+    </PageBackground>
   );
 };
 

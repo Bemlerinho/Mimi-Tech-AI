@@ -1,60 +1,52 @@
 import React from 'react';
-import {
-  Container,
-  Typography,
-  Grid,
-  Card,
-  Box,
-  useTheme,
-} from '@mui/material';
+import { Box, Container, Typography, Grid, Card, CardContent, Button } from '@mui/material';
 import { motion } from 'framer-motion';
 import SwarmBackground from '../../components/Background/SwarmBackground';
 import MouseAgent3D from '../../components/Background/MouseAgent3D';
 import SEO from '../../components/SEO/SEO';
+import { Link } from 'react-router-dom';
 
-interface ResearchProject {
+interface LearnMoreSection {
   title: string;
   description: string;
-  icon: string;
-  category: string;
+  buttonText: string;
+  link: string;
 }
 
-const researchProjects: ResearchProject[] = [
+const sections: LearnMoreSection[] = [
   {
-    title: 'Neuronale Architekturen der nächsten Generation',
-    description: 'Entwicklung fortschrittlicher neuronaler Netzwerkarchitekturen für verbesserte Sprachverarbeitung und multimodale Verständnisfähigkeiten.',
-    icon: '/icons/language.svg',
-    category: 'GRUNDLAGENFORSCHUNG',
+    title: 'Unsere Technologie',
+    description: 'Erfahren Sie mehr über unsere innovative KI-Technologie und wie sie Ihr Unternehmen transformieren kann. Wir setzen auf modernste Algorithmen und nachhaltige Entwicklung.',
+    buttonText: 'Technologie erkunden',
+    link: '/research',
   },
   {
-    title: 'Ethische KI-Entwicklung',
-    description: 'Forschung zu Methoden für die Entwicklung ethischer und verantwortungsvoller KI-Systeme mit Fokus auf Fairness und Transparenz.',
-    icon: '/icons/ethics.svg',
-    category: 'ETHIK & VERANTWORTUNG',
+    title: 'Produkte & Lösungen',
+    description: 'Entdecken Sie unser Portfolio an KI-Lösungen, von Naturio für nachhaltige Landwirtschaft bis hin zu individuellen Entwicklungen für Ihr Unternehmen.',
+    buttonText: 'Produkte ansehen',
+    link: '/products',
   },
   {
-    title: 'Multilinguale KI-Systeme',
-    description: 'Entwicklung von KI-Modellen mit verbessertem Verständnis für verschiedene Sprachen und kulturelle Kontexte.',
-    icon: '/icons/language.svg',
-    category: 'SPRACHVERARBEITUNG',
+    title: 'Über uns',
+    description: 'Lernen Sie unser Team kennen und erfahren Sie mehr über unsere Mission, Werte und Vision für die Zukunft der KI-Technologie.',
+    buttonText: 'Team kennenlernen',
+    link: '/about',
   },
   {
-    title: 'Nachhaltige KI-Infrastruktur',
-    description: 'Forschung zur Optimierung von Energieeffizienz und Ressourcennutzung in KI-Systemen.',
-    icon: '/icons/sustainability.svg',
-    category: 'NACHHALTIGKEIT',
+    title: 'Kontakt & Beratung',
+    description: 'Lassen Sie uns gemeinsam besprechen, wie wir Ihr Unternehmen mit KI-Innovation unterstützen können. Vereinbaren Sie ein kostenloses Beratungsgespräch.',
+    buttonText: 'Kontakt aufnehmen',
+    link: '/contact',
   },
 ];
 
-const ResearchPage: React.FC = () => {
-  const theme = useTheme();
-
+const LearnMorePage: React.FC = () => {
   return (
     <>
       <SEO 
-        title="Forschung & Innovation | Mimi Tech AI"
-        description="Entdecken Sie unsere Forschungsprojekte in den Bereichen KI, Ethik und Nachhaltigkeit."
-        keywords="KI Forschung, Ethische KI, Nachhaltige KI, Innovation"
+        title="Mehr erfahren | Mimi Tech AI"
+        description="Erfahren Sie mehr über Mimi Tech AI - Unsere Technologie, Produkte, Team und Vision für die Zukunft der KI-Innovation."
+        keywords="KI Technologie, Mimi Tech AI Team, KI Produkte, KI Beratung"
       />
       <Box sx={{ 
         position: 'relative',
@@ -74,7 +66,7 @@ const ResearchPage: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.8 }}
           >
             <Typography
               variant="h1"
@@ -91,28 +83,28 @@ const ResearchPage: React.FC = () => {
                 textShadow: '0 0 40px rgba(0, 183, 255, 0.15)',
               }}
             >
-              Forschung & Innovation
+              Mehr über uns erfahren
             </Typography>
 
             <Typography
               variant="h5"
               align="center"
               sx={{ 
-                mb: 8, 
-                maxWidth: '800px', 
-                mx: 'auto',
-                color: 'text.secondary',
+                mb: 8,
+                color: 'rgba(255, 255, 255, 0.7)',
                 fontSize: { xs: '1.1rem', md: '1.3rem' },
                 lineHeight: 1.8,
+                maxWidth: '800px',
+                mx: 'auto'
               }}
             >
-              Wir treiben die Grenzen der KI-Technologie voran und entwickeln die
-              nächste Generation ethischer und nachhaltiger KI-Systeme.
+              Entdecken Sie, wie wir mit innovativer KI-Technologie die digitale 
+              Transformation vorantreiben und nachhaltige Lösungen schaffen
             </Typography>
 
             <Grid container spacing={4}>
-              {researchProjects.map((project, index) => (
-                <Grid item xs={12} md={6} key={project.title}>
+              {sections.map((section, index) => (
+                <Grid item xs={12} md={6} key={section.title}>
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -134,38 +126,6 @@ const ResearchPage: React.FC = () => {
                         },
                       }}
                     >
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          mb: 3,
-                        }}
-                      >
-                        <Box
-                          component="img"
-                          src={project.icon}
-                          alt=""
-                          sx={{
-                            width: 48,
-                            height: 48,
-                            mr: 2,
-                            filter: 'drop-shadow(0 0 25px rgba(0, 183, 255, 0.4))',
-                          }}
-                        />
-                        <Typography
-                          variant="overline"
-                          sx={{
-                            color: '#00b8ff',
-                            fontWeight: 600,
-                            letterSpacing: 1.2,
-                            fontSize: '0.8rem',
-                            textShadow: '0 0 20px rgba(0, 183, 255, 0.3)',
-                          }}
-                        >
-                          {project.category}
-                        </Typography>
-                      </Box>
-
                       <Typography
                         variant="h4"
                         sx={{
@@ -175,7 +135,7 @@ const ResearchPage: React.FC = () => {
                           fontSize: { xs: '1.5rem', md: '1.75rem' },
                         }}
                       >
-                        {project.title}
+                        {section.title}
                       </Typography>
 
                       <Typography
@@ -184,10 +144,33 @@ const ResearchPage: React.FC = () => {
                           color: 'rgba(255, 255, 255, 0.7)',
                           lineHeight: 1.8,
                           fontSize: '1rem',
+                          mb: 3,
                         }}
                       >
-                        {project.description}
+                        {section.description}
                       </Typography>
+
+                      <Button
+                        component={Link}
+                        to={section.link}
+                        variant="contained"
+                        sx={{
+                          background: 'linear-gradient(135deg, #00ff9b 0%, #00b8ff 100%)',
+                          color: '#0A1A2F',
+                          fontWeight: 600,
+                          py: 1.5,
+                          px: 3,
+                          fontSize: '1rem',
+                          '&:hover': {
+                            background: 'linear-gradient(135deg, #00ff9b 20%, #00b8ff 120%)',
+                            transform: 'translateY(-2px)',
+                            boxShadow: '0 8px 25px rgba(0, 183, 255, 0.25)',
+                          },
+                          transition: 'all 0.3s ease-in-out',
+                        }}
+                      >
+                        {section.buttonText}
+                      </Button>
                     </Card>
                   </motion.div>
                 </Grid>
@@ -200,4 +183,4 @@ const ResearchPage: React.FC = () => {
   );
 };
 
-export default ResearchPage;
+export default LearnMorePage;

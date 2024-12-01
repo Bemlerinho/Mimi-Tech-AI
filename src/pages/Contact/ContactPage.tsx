@@ -12,7 +12,8 @@ import {
   MenuItem,
 } from '@mui/material';
 import { motion } from 'framer-motion';
-import SwarmBackground from '../../components/SwarmBackground';
+import SwarmBackground from '../../components/Background/SwarmBackground';
+import MouseAgent3D from '../../components/Background/MouseAgent3D';
 
 interface FormData {
   company: string;
@@ -86,39 +87,68 @@ const ContactPage: React.FC = () => {
 
   return (
     <>
-      <SwarmBackground />
-      <Box
-        sx={{
-          py: 8,
-          background: 'linear-gradient(135deg, rgba(0,128,128,0.1) 0%, rgba(0,64,128,0.1) 100%)',
-          minHeight: '100vh',
-        }}
-      >
-        <Container maxWidth="md">
+      <Box sx={{ 
+        position: 'relative',
+        background: '#0A1A2F',
+        minHeight: '100vh',
+        py: 8,
+      }}>
+        <SwarmBackground />
+        <MouseAgent3D />
+        <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1 }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
             <Typography
-              variant="h2"
+              variant="h1"
               align="center"
-              gutterBottom
-              sx={{ mb: 4, fontWeight: 700 }}
+              sx={{
+                mb: 3,
+                fontSize: { xs: '2.5rem', md: '4rem' },
+                fontWeight: 700,
+                background: 'linear-gradient(135deg, #00ff9b 0%, #00b8ff 50%, #7b42ff 100%)',
+                backgroundClip: 'text',
+                textFillColor: 'transparent',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                textShadow: '0 0 40px rgba(0, 183, 255, 0.15)',
+              }}
             >
               Kontaktieren Sie uns
             </Typography>
             <Typography
               variant="h5"
               align="center"
-              color="text.secondary"
-              sx={{ mb: 6 }}
+              sx={{ 
+                mb: 6,
+                color: 'rgba(255, 255, 255, 0.7)',
+                fontSize: { xs: '1.1rem', md: '1.3rem' },
+                lineHeight: 1.8,
+                maxWidth: '800px',
+                mx: 'auto'
+              }}
             >
               Lassen Sie uns gemeinsam Ihre Geschäftsprozesse durch KI-Innovation optimieren
             </Typography>
           </motion.div>
 
-          <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
+          <Paper 
+            elevation={3} 
+            sx={{ 
+              p: 4, 
+              borderRadius: 4,
+              bgcolor: 'rgba(17, 25, 40, 0.88)',
+              backdropFilter: 'blur(20px) saturate(180%)',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              transition: 'all 0.3s ease-in-out',
+              '&:hover': {
+                boxShadow: '0 8px 32px rgba(0, 183, 255, 0.15)',
+                border: '1px solid rgba(0, 183, 255, 0.3)',
+              },
+            }}
+          >
             <form onSubmit={handleSubmit}>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
@@ -129,6 +159,25 @@ const ContactPage: React.FC = () => {
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: 'rgba(255, 255, 255, 0.23)',
+                        },
+                        '&:hover fieldset': {
+                          borderColor: '#00b8ff',
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: '#00ff9b',
+                        },
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: 'rgba(255, 255, 255, 0.7)',
+                      },
+                      '& .MuiInputBase-input': {
+                        color: 'white',
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -139,6 +188,25 @@ const ContactPage: React.FC = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: 'rgba(255, 255, 255, 0.23)',
+                        },
+                        '&:hover fieldset': {
+                          borderColor: '#00b8ff',
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: '#00ff9b',
+                        },
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: 'rgba(255, 255, 255, 0.7)',
+                      },
+                      '& .MuiInputBase-input': {
+                        color: 'white',
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -149,6 +217,25 @@ const ContactPage: React.FC = () => {
                     name="position"
                     value={formData.position}
                     onChange={handleChange}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: 'rgba(255, 255, 255, 0.23)',
+                        },
+                        '&:hover fieldset': {
+                          borderColor: '#00b8ff',
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: '#00ff9b',
+                        },
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: 'rgba(255, 255, 255, 0.7)',
+                      },
+                      '& .MuiInputBase-input': {
+                        color: 'white',
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -160,6 +247,25 @@ const ContactPage: React.FC = () => {
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: 'rgba(255, 255, 255, 0.23)',
+                        },
+                        '&:hover fieldset': {
+                          borderColor: '#00b8ff',
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: '#00ff9b',
+                        },
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: 'rgba(255, 255, 255, 0.7)',
+                      },
+                      '& .MuiInputBase-input': {
+                        color: 'white',
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -169,6 +275,25 @@ const ContactPage: React.FC = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: 'rgba(255, 255, 255, 0.23)',
+                        },
+                        '&:hover fieldset': {
+                          borderColor: '#00b8ff',
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: '#00ff9b',
+                        },
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: 'rgba(255, 255, 255, 0.7)',
+                      },
+                      '& .MuiInputBase-input': {
+                        color: 'white',
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -180,6 +305,28 @@ const ContactPage: React.FC = () => {
                     name="interest"
                     value={formData.interest}
                     onChange={handleChange}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: 'rgba(255, 255, 255, 0.23)',
+                        },
+                        '&:hover fieldset': {
+                          borderColor: '#00b8ff',
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: '#00ff9b',
+                        },
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: 'rgba(255, 255, 255, 0.7)',
+                      },
+                      '& .MuiInputBase-input': {
+                        color: 'white',
+                      },
+                      '& .MuiMenuItem-root': {
+                        color: '#0A1A2F',
+                      },
+                    }}
                   >
                     {interests.map((option) => (
                       <MenuItem key={option} value={option}>
@@ -198,23 +345,49 @@ const ContactPage: React.FC = () => {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Beschreiben Sie kurz Ihre Anforderungen und wie wir Ihnen helfen können..."
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: 'rgba(255, 255, 255, 0.23)',
+                        },
+                        '&:hover fieldset': {
+                          borderColor: '#00b8ff',
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: '#00ff9b',
+                        },
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: 'rgba(255, 255, 255, 0.7)',
+                      },
+                      '& .MuiInputBase-input': {
+                        color: 'white',
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <Button
                     type="submit"
-                    variant="contained"
                     fullWidth
+                    variant="contained"
                     size="large"
                     sx={{
                       mt: 2,
-                      backgroundColor: '#00a86b',
+                      background: 'linear-gradient(135deg, #00ff9b 0%, #00b8ff 100%)',
+                      color: '#0A1A2F',
+                      fontWeight: 600,
+                      py: 1.5,
+                      fontSize: '1.1rem',
                       '&:hover': {
-                        backgroundColor: '#008f5d',
+                        background: 'linear-gradient(135deg, #00ff9b 20%, #00b8ff 120%)',
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 8px 25px rgba(0, 183, 255, 0.25)',
                       },
+                      transition: 'all 0.3s ease-in-out',
                     }}
                   >
-                    Anfrage senden
+                    Nachricht senden
                   </Button>
                 </Grid>
               </Grid>
@@ -227,7 +400,11 @@ const ContactPage: React.FC = () => {
         autoHideDuration={6000}
         onClose={() => setSnackbar({ ...snackbar, open: false })}
       >
-        <Alert severity={snackbar.severity} sx={{ width: '100%' }}>
+        <Alert
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          severity={snackbar.severity}
+          sx={{ width: '100%' }}
+        >
           {snackbar.message}
         </Alert>
       </Snackbar>

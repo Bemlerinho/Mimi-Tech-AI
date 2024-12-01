@@ -11,6 +11,8 @@ import BlogPage from './pages/Blog/BlogPage';
 import ResearchPage from './pages/Research/ResearchPage';
 import NaturioPage from './pages/Naturio/NaturioPage';
 import ContactPage from './pages/Contact/ContactPage';
+import DiscoverPage from './pages/Discover/DiscoverPage';
+import LearnMorePage from './pages/LearnMore/LearnMorePage';
 import './App.css';
 
 const theme = createTheme({
@@ -103,6 +105,8 @@ function App() {
               <Route path="/research" element={<ResearchPage />} />
               <Route path="/naturio" element={<NaturioPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/discover" element={<DiscoverPage />} />
+              <Route path="/learn-more" element={<LearnMorePage />} />
             </Routes>
           </Layout>
         </Router>

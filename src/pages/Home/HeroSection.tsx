@@ -353,29 +353,9 @@ const HeroSection: React.FC = () => {
             xs={12}
             md={6}
             sx={{
-              display: 'none', // Temporarily hide until we have the hero image
-              justifyContent: 'center',
-              alignItems: 'center',
+              display: 'none',
             }}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.2 }}
-            >
-              <Box
-                component="img"
-                src="/images/hero-image.png"
-                alt=""
-                sx={{
-                  width: '100%',
-                  maxWidth: '600px',
-                  height: 'auto',
-                  filter: 'drop-shadow(0 8px 16px rgba(13, 175, 148, 0.3))',
-                }}
-              />
-            </motion.div>
-          </Grid>
+          />
         </Grid>
       </Container>
     </HeroContent>

@@ -4,6 +4,10 @@ import { motion } from 'framer-motion';
 import SwarmBackground from '../../components/Background/SwarmBackground';
 import MouseAgent3D from '../../components/Background/MouseAgent3D';
 import SEO from '../../components/SEO/SEO';
+import naturioIcon from '../../assets/icons/naturio.svg';
+import processAutomationIcon from '../../assets/icons/process-automation.svg';
+import dataAnalysisIcon from '../../assets/icons/data-analysis.svg';
+import customDevelopmentIcon from '../../assets/icons/custom-development.svg';
 
 interface DiscoverySection {
   title: string;
@@ -15,22 +19,22 @@ const discoverySections: DiscoverySection[] = [
   {
     title: 'Naturio',
     description: 'Unsere KI-gestützte Plattform für nachhaltige Landwirtschaft und Ressourcenmanagement. Optimieren Sie Ihre landwirtschaftlichen Prozesse mit modernster Technologie.',
-    icon: '/src/assets/icons/naturio.svg',
+    icon: naturioIcon,
   },
   {
     title: 'KI-Prozessautomatisierung',
     description: 'Automatisieren Sie Ihre Geschäftsprozesse mit unseren intelligenten KI-Lösungen. Steigern Sie die Effizienz und reduzieren Sie manuelle Arbeitsschritte.',
-    icon: '/src/assets/icons/process-automation.svg',
+    icon: processAutomationIcon,
   },
   {
     title: 'Datenanalyse & Prognosen',
     description: 'Nutzen Sie die Kraft der KI für präzise Datenanalysen und Zukunftsprognosen. Treffen Sie fundierte Entscheidungen basierend auf KI-gestützten Erkenntnissen.',
-    icon: '/src/assets/icons/data-analysis.svg',
+    icon: dataAnalysisIcon,
   },
   {
     title: 'Individuelle Entwicklung',
     description: 'Wir entwickeln maßgeschneiderte KI-Lösungen für Ihre spezifischen Anforderungen. Von der Konzeption bis zur Implementierung stehen wir Ihnen zur Seite.',
-    icon: '/src/assets/icons/custom-development.svg',
+    icon: customDevelopmentIcon,
   },
 ];
 

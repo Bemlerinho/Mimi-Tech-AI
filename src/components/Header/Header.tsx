@@ -30,7 +30,7 @@ const Header: React.FC = () => {
     <header className={`header ${isSticky ? 'sticky-header' : ''}`}>
       <div className="header-content">
         <Link to="/" className="logo-container">
-          <img src="/mimi-tech-ai.svg" alt="MIMI Tech AI" className="logo" />
+          <img src="/mimi-tech-ai-optimized.svg" alt="MIMI Tech AI" className="logo" />
         </Link>
 
         <button 

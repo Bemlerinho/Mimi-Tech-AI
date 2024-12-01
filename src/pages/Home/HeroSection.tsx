@@ -155,7 +155,7 @@ const HeroSection: React.FC = () => {
               }}
             >
               <motion.img
-                src="/mimi-tech-ai-logo.svg"
+                src="/images/mimi-tech-ai-logo.svg"
                 alt="Mimi Tech Logo"
                 style={{
                   width: '280px',
@@ -353,7 +353,7 @@ const HeroSection: React.FC = () => {
             xs={12}
             md={6}
             sx={{
-              display: { xs: 'none', md: 'flex' },
+              display: 'none', // Temporarily hide until we have the hero image
               justifyContent: 'center',
               alignItems: 'center',
             }}

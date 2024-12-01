@@ -3,19 +3,14 @@
   "name": "Mimi Tech AI - Innovative KI-Lösungen",
   "icons": [
     {
-      "src": "mimi-tech-ai-logo.svg",
+      "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/svg+xml"
+      "type": "image/x-icon"
     },
     {
-      "src": "mimi-tech-ai-logo.svg",
+      "src": "mimi-tech-ai-optimized.svg",
       "type": "image/svg+xml",
-      "sizes": "192x192"
-    },
-    {
-      "src": "mimi-tech-ai-logo.svg",
-      "type": "image/svg+xml",
-      "sizes": "512x512"
+      "sizes": "150x150"
     }
   ],
   "start_url": "/",

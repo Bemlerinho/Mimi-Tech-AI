@@ -39,7 +39,7 @@ const NaturioPage: React.FC = () => {
               >
                 <Box sx={{ mb: 4 }}>
                   <motion.img
-                    src="/public/images/Naturio.jpg"
+                    src="/images/Naturio.jpg"
                     alt="Naturio Logo"
                     style={{
                       width: '280px',
@@ -164,7 +164,7 @@ const NaturioPage: React.FC = () => {
                 >
                   <Box
                     component="img"
-                    src="/public/images/naturio.svg"
+                    src="/images/naturio.svg"
                     alt="Naturio Platform"
                     sx={{
                       width: '100%',

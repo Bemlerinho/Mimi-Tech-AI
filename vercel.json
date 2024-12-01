@@ -19,16 +19,15 @@
       }
     },
     {
-      "src": "/(.*)\\.js$",
+      "src": "/images/(.*)",
       "headers": {
-        "Content-Type": "application/javascript",
-        "Access-Control-Allow-Origin": "*"
+        "cache-control": "public, max-age=31536000, immutable"
       }
     },
     {
-      "src": "/(.*)\\.(png|jpg|jpeg|svg|ico)$",
+      "src": "/(.*)\\.(?:svg|png|jpg|jpeg|gif|ico)$",
       "headers": {
-        "Cache-Control": "public, max-age=31536000, immutable"
+        "cache-control": "public, max-age=31536000, immutable"
       }
     },
     {

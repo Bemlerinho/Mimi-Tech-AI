@@ -143,11 +143,11 @@ const HeroSection: React.FC = () => {
                   zIndex: 1
                 },
                 '@keyframes glowPulse': {
-                  '0%, 100%': {
+                  '0%, 100%': { 
                     opacity: 0.3,
                     transform: 'translateX(-50%) scale(1)'
                   },
-                  '50%': {
+                  '50%': { 
                     opacity: 0.6,
                     transform: 'translateX(-50%) scale(1.1)'
                   }
@@ -155,7 +155,7 @@ const HeroSection: React.FC = () => {
               }}
             >
               <motion.img
-                src="/images/mimi-tech-ai-logo.svg"
+                src="/mimi-tech-ai-logo.svg"
                 alt="Mimi Tech Logo"
                 style={{
                   width: '280px',

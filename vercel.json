@@ -25,6 +25,20 @@
       }
     },
     {
+      "src": "/(.*)\\.js$",
+      "headers": {
+        "Content-Type": "application/javascript",
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/(.*)\\.mjs$",
+      "headers": {
+        "Content-Type": "application/javascript",
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
       "src": "/(.*)\\.(?:svg|png|jpg|jpeg|gif|ico)$",
       "headers": {
         "cache-control": "public, max-age=31536000, immutable"

@@ -10,6 +10,17 @@ interface Task {
   startTime: number;
 }
 
+interface MousePhysics {
+  velocity: THREE.Vector3;
+  acceleration: THREE.Vector3;
+  rotation: THREE.Vector3;
+  bobbing: {
+    phase: number;
+    amplitude: number;
+    frequency: number;
+  };
+}
+
 const MouseAgent3D: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef<THREE.Group>();
@@ -19,6 +30,27 @@ const MouseAgent3D: React.FC = () => {
   const tasksRef = useRef<Task[]>([]);
   const targetPositionRef = useRef<THREE.Vector3>(new THREE.Vector3());
   const currentTaskRef = useRef<Task | null>(null);
+  const physicsRef = useRef<MousePhysics>({
+    velocity: new THREE.Vector3(),
+    acceleration: new THREE.Vector3(),
+    rotation: new THREE.Vector3(),
+    bobbing: {
+      phase: 0,
+      amplitude: 0.05,
+      frequency: 2
+    }
+  });
+
+  // Stabilere Bewegungsparameter
+  const MOVEMENT = {
+    MAX_SPEED: 0.025,        // Gleiche Geschwindigkeit
+    ACCELERATION: 0.003,     // Noch sanftere Beschleunigung
+    DECELERATION: 0.98,      // Gleiches Abbremsen
+    ROTATION_SPEED: 0.02,    // Langsamere Drehung für mehr Stabilität
+    MIN_DISTANCE: 0.2,       // Gleicher Mindestabstand
+    TILT_FACTOR: 0.02,       // Deutlich reduzierte Neigung
+    BOUNCE_SPEED: 0.0003     // Minimal sichtbares Schweben
+  };
 
   const createDataCube = () => {
     const geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
@@ -167,42 +199,89 @@ const MouseAgent3D: React.FC = () => {
     };
   };
 
-  const updateMouseMovement = () => {
+  const updateMouseMovement = (time: number) => {
     if (!mouseRef.current || !currentTaskRef.current) return;
 
     const mouse = mouseRef.current;
+    const physics = physicsRef.current;
     const target = targetPositionRef.current;
-    const task = currentTaskRef.current;
-
-    // Berechne Richtung zum Ziel
     const direction = new THREE.Vector3().subVectors(target, mouse.position);
     const distance = direction.length();
 
-    if (distance > 0.1) {
-      // Bewege die Maus zum Ziel
+    // Stabilere Bewegung
+    if (distance > MOVEMENT.MIN_DISTANCE) {
       direction.normalize();
-      mouse.position.add(direction.multiplyScalar(0.05));
+      
+      // Sehr sanfte Beschleunigung ohne Wackeln
+      physics.acceleration.copy(direction).multiplyScalar(MOVEMENT.ACCELERATION);
+      physics.velocity.lerp(physics.acceleration, 0.03); // Noch sanftere Interpolation
+      
+      if (physics.velocity.length() > MOVEMENT.MAX_SPEED) {
+        physics.velocity.normalize().multiplyScalar(MOVEMENT.MAX_SPEED);
+      }
 
-      // Drehe die Maus in Bewegungsrichtung
-      const targetRotation = Math.atan2(direction.x, direction.z);
-      mouse.rotation.y += (targetRotation - mouse.rotation.y) * 0.1;
-    } else if (!task.completed) {
-      // Führe Aufgabe aus
-      switch (task.type) {
-        case 'analyze':
-          task.object.scale.multiplyScalar(0.95);
-          if (task.object.scale.x < 0.1) task.completed = true;
-          break;
-        case 'collect':
-          task.object.position.lerp(mouse.position, 0.1);
-          if (task.object.position.distanceTo(mouse.position) < 0.1) task.completed = true;
-          break;
-        case 'process':
-          task.object.rotation.z += 0.1;
-          if (Date.now() - task.startTime > 2000) task.completed = true;
-          break;
+      mouse.position.add(physics.velocity);
+      
+      // Stabilere Rotation ohne abrupte Änderungen
+      const targetRotation = Math.atan2(physics.velocity.x, physics.velocity.z);
+      const currentRotation = mouse.rotation.y;
+      const rotationDiff = Math.atan2(Math.sin(targetRotation - currentRotation), Math.cos(targetRotation - currentRotation));
+      mouse.rotation.y += rotationDiff * MOVEMENT.ROTATION_SPEED;
+      
+      // Minimale, stabile Neigung
+      const tilt = physics.velocity.length() * MOVEMENT.TILT_FACTOR;
+      mouse.rotation.z += (-physics.velocity.x * tilt - mouse.rotation.z) * 0.02;
+      mouse.rotation.x += (physics.velocity.z * tilt - mouse.rotation.x) * 0.02;
+
+      // Sehr dezente Hüpfbewegung
+      physics.bobbing.phase += physics.velocity.length() * 0.3;
+      const bounce = Math.sin(physics.bobbing.phase) * 0.005 * Math.min(0.2, physics.velocity.length());
+      mouse.position.y += bounce;
+    } else {
+      // Sanftes Abbremsen ohne Wackeln
+      physics.velocity.multiplyScalar(MOVEMENT.DECELERATION);
+      mouse.position.add(physics.velocity);
+      
+      // Sehr sanfte Rückkehr zur Ausgangsposition
+      mouse.rotation.z *= 0.99;
+      mouse.rotation.x *= 0.99;
+      
+      // Kaum sichtbares Schweben im Ruhezustand
+      physics.bobbing.phase += MOVEMENT.BOUNCE_SPEED;
+      const idleBounce = Math.sin(physics.bobbing.phase) * 0.003;
+      mouse.position.y += idleBounce;
+
+      // Aufgabeninteraktionen
+      if (!currentTaskRef.current.completed) {
+        switch (currentTaskRef.current.type) {
+          case 'analyze':
+            currentTaskRef.current.object.scale.multiplyScalar(0.99);
+            if (currentTaskRef.current.object.scale.x < 0.1) currentTaskRef.current.completed = true;
+            break;
+          case 'collect':
+            currentTaskRef.current.object.position.lerp(mouse.position, 0.02);
+            if (currentTaskRef.current.object.position.distanceTo(mouse.position) < 0.1) {
+              currentTaskRef.current.completed = true;
+              const scale = currentTaskRef.current.object.scale;
+              scale.x = scale.y = scale.z = Math.max(0.01, scale.x * 0.95);
+            }
+            break;
+          case 'process':
+            currentTaskRef.current.object.rotation.z += 0.02;
+            if (Date.now() - currentTaskRef.current.startTime > 2000) currentTaskRef.current.completed = true;
+            break;
+        }
       }
     }
+
+    // Minimale Schwanzanimation
+    const tail = mouse.children[mouse.children.length - 1];
+    const velocityMagnitude = physics.velocity.length();
+    
+    // Sehr subtile Schwanzbewegung
+    tail.rotation.x = Math.sin(time * 1.2) * 0.02 * (velocityMagnitude + 0.1);
+    tail.rotation.y = Math.cos(time * 0.8) * 0.02 * (velocityMagnitude + 0.1);
+    tail.rotation.z = Math.sin(time * 1.0) * 0.01 * velocityMagnitude;
   };
 
   useEffect(() => {
@@ -246,7 +325,8 @@ const MouseAgent3D: React.FC = () => {
     let time = 0;
     const animate = () => {
       requestAnimationFrame(animate);
-
+      time += 0.01;
+      
       // Task management
       if (!currentTaskRef.current || currentTaskRef.current.completed) {
         // Entferne abgeschlossene Aufgabe
@@ -262,16 +342,8 @@ const MouseAgent3D: React.FC = () => {
       }
 
       // Update mouse movement and task interaction
-      updateMouseMovement();
+      updateMouseMovement(time);
 
-      // Tail animation
-      if (mouseRef.current) {
-        const tail = mouseRef.current.children[mouseRef.current.children.length - 1];
-        tail.rotation.x = Math.sin(time * 5) * 0.2;
-        tail.rotation.y = Math.cos(time * 3) * 0.2;
-      }
-
-      time += 0.01;
       renderer.render(scene, camera);
     };
 

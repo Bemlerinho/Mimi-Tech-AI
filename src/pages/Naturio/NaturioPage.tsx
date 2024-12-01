@@ -3,6 +3,7 @@ import { Box, Container, Typography, Grid, Button, Paper } from '@mui/material';
 import { motion } from 'framer-motion';
 import SEO from '../../components/SEO/SEO';
 import FeaturesSection from '../../components/Naturio/FeaturesSection';
+import HowItWorksSection from '../../components/Naturio/HowItWorksSection';
 import SwarmBackground from '../../components/Background/SwarmBackground';
 import MouseAgent3D from '../../components/Background/MouseAgent3D';
 
@@ -38,7 +39,7 @@ const NaturioPage: React.FC = () => {
               >
                 <Box sx={{ mb: 4 }}>
                   <motion.img
-                    src="/images/Naturio.jpg"
+                    src="/public/images/Naturio.jpg"
                     alt="Naturio Logo"
                     style={{
                       width: '280px',
@@ -186,6 +187,7 @@ const NaturioPage: React.FC = () => {
         </Container>
       </Box>
 
+      <HowItWorksSection />
       <FeaturesSection />
     </>
   );

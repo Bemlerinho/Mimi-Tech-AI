@@ -23,7 +23,7 @@ const SolutionCard: React.FC<SolutionCardProps> = ({ title, description, feature
         flexDirection: 'column',
       }}
     >
-      <Typography variant="h5" component="h3" gutterBottom sx={{ color: 'white' }}>
+      <Typography variant="h6" component="h2" gutterBottom sx={{ color: 'white' }}>
         {title}
       </Typography>
       <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 3 }}>

@@ -93,7 +93,7 @@ function App() {
     <HelmetProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Router>
+        <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <Layout>
             <Routes>
               <Route path="/" element={<HomePage />} />

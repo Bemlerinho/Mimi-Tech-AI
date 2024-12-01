@@ -43,13 +43,17 @@ const Header: React.FC = () => {
           <span></span>
         </button>
 
-        <nav className={`navigation ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+        <nav 
+          className={`navigation ${isMobileMenuOpen ? 'mobile-open' : ''}`}
+          aria-hidden={!isMobileMenuOpen}
+        >
           {navItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
               className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
               onClick={() => setIsMobileMenuOpen(false)}
+              tabIndex={isMobileMenuOpen ? 0 : -1}
             >
               {item.label}
             </Link>

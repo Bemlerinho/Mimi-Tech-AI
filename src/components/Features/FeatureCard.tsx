@@ -27,7 +27,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description }) =
       <Box sx={{ color: 'primary.main', mb: 2, fontSize: '2rem' }}>
         {icon}
       </Box>
-      <Typography variant="h5" component="h3" gutterBottom sx={{ color: 'white' }}>
+      <Typography variant="h6" component="h2" gutterBottom sx={{ color: 'white' }}>
         {title}
       </Typography>
       <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>

@@ -127,7 +127,7 @@ const Services: React.FC = () => {
           viewport={{ once: true }}
         >
           <Typography
-            variant="h3"
+            variant="h2"
             component="h2"
             align="center"
             sx={{
@@ -176,7 +176,7 @@ const Services: React.FC = () => {
                     >
                       <IconWrapper>{service.icon}</IconWrapper>
                       <Typography
-                        variant="h5"
+                        variant="h6"
                         component="h3"
                         sx={{
                           mb: 2,

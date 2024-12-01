@@ -72,7 +72,7 @@ const About: React.FC = () => {
               viewport={{ once: true }}
             >
               <Typography
-                variant="h3"
+                variant="h2"
                 component="h2"
                 sx={{
                   mb: 3,
